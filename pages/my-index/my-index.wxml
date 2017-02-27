@@ -1,0 +1,53 @@
+<!--category.wscroll-xml-->
+<view class="page-index" wx:if="{{register}}">
+    <view class="top">
+        <view class="top-left">
+            <image src="{{avatarUrl}}"></image>
+        </view>
+        <view class="top-right">
+            <view class="top-right-1">{{nicname}}</view>
+        </view>
+    </view>
+    <!--活动标题-->
+    <view class="hd-tit">活动报名</view>
+    <view class="content">
+        <view class="hd-all" bindtap="allbtn">
+            <view class="all-icon">
+                <image src="../../images/add.png"></image>
+            </view>
+            <view class="all-text">
+                全部
+            </view>
+        </view>
+        <view class="hd-dcj" bindtap="allbtn">
+            <view class="dcj-icon">
+                <image src="../../images/cj.png"></image>
+            </view>
+            <view class="dcj-text">
+                待参加
+            </view>
+        </view>
+        <view class="hd-wwc" bindtap="allbtn">
+            <view class="wwc-icon">
+                <image src="../../images/wc.png"></image>
+            </view>
+            <view class="wwc-text">
+                未完成
+            </view>
+        </view>
+        <view class="hd-other" bindtap="allbtn">
+            <view class="other-icon">
+                <image src="../../images/other.png"></image>
+            </view>
+            <view class="other-text">
+                其他
+            </view>
+        </view>
+    </view>
+</view>
+
+<!--（未登录时出现）登录按钮-->
+<view class="page-index" wx:else>
+    <view class="no-dl">尚未登录</view>
+    <view class="register" bindtap="onwxLoad">登录</view>
+</view>

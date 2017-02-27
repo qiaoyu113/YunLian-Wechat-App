@@ -1,0 +1,68 @@
+<!--category.wscroll-xml-->
+<view class="page-index">
+    <!--<view class="banner">
+        <swiper indicator-dots="{{indicatorDots}}"
+        autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{imgUrls}}">
+            <swiper-item>
+            <image src="{{item}}" class="slide-image" width="355" height="150"/>
+            </swiper-item>
+        </block>
+        </swiper>
+    </view>-->
+    <view class="list">
+        <ul>
+            <li class="list1" bindtap="tapName"><image style="width: 35rpx; height: 35rpx;float:left;margin:10rpx 13rpx 0 50rpx;" mode="scaleToFill" src="../../images/li1.png"></image>选择主题</li>
+            <li class="list2" bindtap="taptime"><image style="width: 35rpx; height: 35rpx;float:left;margin:10rpx 13rpx 0 50rpx;" mode="scaleToFill" src="../../images/li2.png"></image>时间地点</li>
+            <li class="list3" bindtap="tapfan"><image style="width: 35rpx; height: 35rpx;float:left;margin:10rpx 13rpx 0 50rpx;" mode="scaleToFill" src="../../images/li3.png"></image>时间范围</li>
+        </ul>
+    </view>
+    <div class="zhuti" wx:if="{{type=='1'}}">
+        <ul>
+            <li wx:for="{{zhuti}}" bindtap="click1">{{item}}</li>
+        </ul>
+    </div>
+    <div wx:if="{{type=='2'}}">
+    
+    </div>
+    <div class="shijian" wx:if="{{shijian=='1'}}">
+        <ul>
+            <li wx:for="{{map}}">{{item}}</li>
+        </ul>
+    </div>
+    <div wx:if="{{shijian=='2'}}">
+    
+    </div>
+    <div class="fanwei" wx:if="{{fanwei=='1'}}">
+        <ul>
+            <li wx:for="{{time}}">{{item}}</li>
+        </ul>
+    </div>
+    <div wx:if="{{fanwei=='2'}}">
+    
+    </div>
+    <view class="content">
+        <view class="commiditys">
+            <view class="hot">
+                <!--<view class="label">活动详情</view>-->
+                    <view class="hot-wrap" wx:for="{{json}}" >
+                        <view class="hot-item" data-id="{{item.id}}" bindtap="toast">
+                            <view class="hot-bor">
+                                <view class="pic">
+                                    <!--<image src="{{'http://test.resource.vjuzhen.com/'+item.activityPoster}}" ></image>-->
+                                    <image src="../../images/111.jpg"></image>
+                                </view>
+                                <view class="text">
+                                    <view class="title">{{item.activityTitle}}云狮会数字营销论坛（第十三期）视频营销新时代</view>
+                                    <view class="time">{{item.time}}</view>
+                                    <view class="info">
+                                        <view class="price">{{item.jia}}</view>
+                                    </view>
+                                </view>                      
+                            </view>
+                        </view>
+                    </view>
+            </view>
+        </view>
+    </view>
+</view>

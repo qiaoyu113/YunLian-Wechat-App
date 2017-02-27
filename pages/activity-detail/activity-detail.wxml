@@ -1,0 +1,66 @@
+<!--logs.wxml-->
+<view class="page-index">
+  <view class="top-img" >
+    <!--<image src="{{'http://test.resource.vjuzhen.com/'+logs.activityPoster}}"></image>-->
+    <image src="../../images/111.jpg"></image>
+  </view>
+  <view class="top-text">
+    {{logs.activityTitle}}111
+  </view>
+  <!--活动详情模块-->
+  <view class="page-message">
+    <!--报名时间-->
+    <view class="message-time">
+      <view class="time-left"><image src="../../images/time.png" style="width: 40rpx; height: 40rpx;"></image></view>
+      <view class="time-right">
+        <view class="time-right-1">01/23/ 17:00 至 01/23/ 19:00
+          <span>已结束</span>
+        </view>
+        <view class="time-right-2">01/23/ 17:00 至 01/23/ 19:00
+          <span>报名截止</span>
+        </view>
+      </view>
+    </view>
+    <!--活动地址-->
+    <view class="message-add">
+      <view class="add-left">
+        <image src="../../images/add.png" style="width: 40rpx; height: 40rpx;"></image>
+      </view>
+      <view class="add-right">
+        {{logs.prov}}{{log.city}}
+      </view>
+    </view>
+    <!--报名人数-->
+    <view class="message-peo">
+        <view class="peo-left">
+        <image src="../../images/peo.png" style="width: 40rpx; height: 40rpx;"></image>
+      </view>
+      <view class="peo-right">
+        11人已报名
+      </view>
+    </view>
+    <!--价格-->
+    <view class="message-money">
+       <view class="money-left">
+          <image src="../../images/money.png" style="width: 40rpx; height: 40rpx;"></image>
+        </view>
+        <view class="money-right">
+          免费
+        </view>
+    </view>
+  </view>
+  <!--活动内容-->
+  <view class="activity-body">
+    <view class="activity-top">
+      <view class="top1-text">活动详情</view>
+    </view>
+    <view class="activity-center">
+        一度金融的消息称，乐视金融同数码视讯的接触尚处在高层范围内进行，因此对于收购价格，暂时还不能确定。按照市场预估价在5亿至10亿人民币。
+    </view>
+  </view>
+</view>
+<!--按钮-->
+  <view class="btn">
+    <view class="btn2" bindtap="toast" wx:if="{{btn=='1'}}">我要报名</view>
+    <view class="btn1" wx:else="{{btn=='2'}}">报名已结束</view>
+  </view>

@@ -1,0 +1,37 @@
+<view class="page">
+    <view class="piao" wx:for="{{json}}">
+        <view class="piao-top">
+            <image src="../../images/poptop.png"></image>
+        </view>
+        <view class="piao-center">
+            <image src="../../images/popcenter.png"></image>
+            <view class="name">{{item.name}}</view>
+            <view class="number">{{item.num}}</view>
+            <view class="zt">{{item.zt}}</view>
+            <view class="border">
+                <image src="../../images/111.jpg"></image>
+            </view>
+        </view>
+        <view class="piao-bottom">
+            <image src="../../images/popdown.png"></image>
+        </view>
+        <view class="xiangqing">
+            <view class="leixing">商务票 <span>￥{{item.money}}</span> /张</view>
+            <view class="x2">{{item.tit}}</view>
+            <view class="x3">
+                <image src="../../images/wc.png"></image>
+                <view>开始时间：<span>{{item.time}}</span></view>
+            </view>
+            <view class="x4">
+                <image src="../../images/add.png"></image>
+                <view>{{item.address}}</view>
+                <view class="clean"></view>
+            </view>
+            <!--提示-->
+            <view class="tishi">本电子票用于活动现场签到入场,为便于检票,建议截图保存</view>
+        </view>
+        <view class="piao-down">
+            <image src="../../images/popbottom.png"></image>
+        </view>
+    </view>
+</view>

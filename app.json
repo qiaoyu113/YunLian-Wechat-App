@@ -1,0 +1,40 @@
+{
+  "pages":[
+    "pages/activity-index/activity-index",
+    "pages/my-index/my-index",
+    "pages/activity-detail/activity-detail",
+    "pages/my-activities/my-activities",
+    "pages/piao/piao",
+    "pages/WeChat-login/WeChat-login",
+    "pages/register/register"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#48C23D",
+    "navigationBarTitleText": "智唐科技",
+    "navigationBarTextStyle":"#fff",
+    "navigationBarFont-size":"20px",
+    "backgroundColor": "#fff",
+    "enablePullDownRefresh": "true"
+  },
+  "tabBar": {
+    "color":"#7f7f7f",
+    "selectedColor": "#3cc51f",
+    "borderStyle":"black",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "text": "活动",
+        "iconPath":"images/huo.png",
+        "selectedIconPath":"images/huo1.png",
+        "pagePath":"pages/activity-index/activity-index"
+      },
+      {
+      "text": "我的",
+      "iconPath":"images/my.png",
+      "selectedIconPath":"images/my1.png",
+      "pagePath":"pages/my-index/my-index"
+      }
+    ]
+  }
+}

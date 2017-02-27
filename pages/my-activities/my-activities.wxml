@@ -1,0 +1,32 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="hd-top">
+    <view class="hd-top-tit">全部</view>
+  </view>
+  <view class="hd-center" wx:for="{{json}}">
+    <view class="hd-center1">
+      <view class="hd-center-top">
+        <view class="piao-top">
+           {{item.tit}}
+        </view>
+        <view class="piao-center">
+          <view class="piao-center-left">
+            <image src="{{item.img}}"></image>
+            <view class="zt">未开始</view>
+          </view>
+          <view class="piao-center-right">
+            <view>开始时间：<span>{{item.time}}</span></view>
+            <view class="address">活动地点：<span>{{item.add}}</span></view>
+            <view>发布人：<span>{{item.peo}}</span></view>
+            <view>票价：<span>{{item.money}}</span></view>
+          </view>
+        </view>
+        <view class="piao-bottom">
+          <view class="piao-bottom-left">{{item.pay}}</view>
+          <view class="piao-bottom-right">{{item.math}}张，共{{item.zong}}张</view>
+        </view>
+      </view>
+      <view class="hd-center-bottom" bindtap="chakan">查看</view>
+    </view>
+  </view>
+</view>

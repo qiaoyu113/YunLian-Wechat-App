@@ -1,0 +1,16 @@
+/**index.wxss**/
+.container-hang {  
+    display: flex;  
+    flex-direction: row;  
+    background-color: #fff;   
+}  
+.kuang{
+    width:100rpx;height:100rpx;border:1rpx solid #c6c6c6;position:fixed;left:100rpx;top:540rpx;
+}
+.qiu{
+    width:90rpx;
+    height:90rpx;
+    background:#78EA0B;
+    border-radius: 100%;
+    position:fixed;
+}

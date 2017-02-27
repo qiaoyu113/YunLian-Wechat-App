@@ -1,0 +1,160 @@
+page{
+    height:100%;
+}
+.page{
+    height:100%;
+    background:#B8CEDC;
+}
+.piao{
+    height:700rpx;
+    text-align:center;
+    padding-top:100rpx;
+    
+}
+.piao-top{
+    width:100%;
+    height:32rpx;
+    margin:auto;
+}
+.piao-top image{
+    width:671rpx;
+    height:30rpx;
+    display:inline-block;
+    overflow:hidden;
+}
+.piao-center{
+    height:447rpx;
+    position: relative;
+}
+.piao-center image{
+    width:670rpx;
+    height:450rpx;
+    position:absolute;
+    left:0;
+    top:0;
+    right:0;
+    margin:auto;
+}
+.piao-bottom{
+    height:32rpx;
+}
+.piao-bottom image{
+    width:670rpx;
+    height:32rpx;
+}
+.xiangqing{
+    background:#fff;
+    width:545rpx;
+    margin-left:84rpx;
+    text-align:left;
+    font-size:26rpx;
+    padding:20rpx;
+}
+.leixing{
+    font-size:28rpx;
+    color:#B7B7B7;
+    margin-top:15rpx;
+}
+.leixing span{
+    color:#EA524F;
+}
+.x2{
+    font-size:30rpx;
+    margin-top:15rpx;
+}
+.x3{
+    margin-top:30rpx;
+    height:40rpx;
+    line-height:40rpx;
+    color:#ADADAD;
+}
+.x3 image{
+    width:36rpx;
+    height:36rpx;
+    float:left;
+    margin:0 5rpx;
+}
+.x3 view{
+    float:left;
+    margin-left:15rpx;
+}
+.x4{
+    line-height:40rpx;
+    margin-top:10rpx;
+    color:#ADADAD;
+    overflow:auto;
+}
+.x4 image{
+    width:40rpx;
+    height:40rpx;
+    float:left;
+}
+.x4 view{
+    float:left;
+    width:485rpx;
+    margin-left:15rpx;
+}
+.clean{clear:both;}
+.piao-down{
+    height:27rpx;
+}
+.piao-down image{
+    height:35rpx;
+    width:679rpx;
+}
+.tishi{
+    width:448rpx;
+    line-height:30rpx;
+    font-size:18rpx;
+    text-align:center;
+    margin:auto;
+    margin-top:60rpx;
+    border:1rpx solid #F6C365;
+    border-radius:50rpx;
+    padding:0rpx 10rpx;
+    color:#F6C365;
+}
+.name{
+    position:absolute;
+    top:15rpx;
+    left:130rpx;
+    font-size:26rpx;
+    z-index:20rpx;
+}
+.number{
+    position:absolute;
+    top:50rpx;
+    left:130rpx;
+    font-size:26rpx;
+    z-index:20rpx;
+    color:#BFBFBF;
+}
+.zt{
+    padding:5rpx;
+    border-radius: 8rpx;
+    background:#E1F6FD;
+    color:#96C4DF;
+    text-align: center;
+    font-size:28rpx;
+    position:absolute;
+    right:130rpx;
+    top:25rpx;
+}
+.border{
+    width:300rpx;
+    height:300rpx;
+    position:absolute;
+    left:0;
+    right:0;
+    margin:auto;
+    top:120rpx;
+    border:1rpx dashed #B8CEDC;
+    padding:20rpx;
+    box-sizing: border-box;
+    background:#fff;
+}
+.border image{
+    width:260rpx;
+    height:260rpx;
+    margin-top:20rpx;
+}
