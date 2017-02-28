@@ -19,7 +19,7 @@
                 全部
             </view>
         </view>
-        <view class="hd-dcj" bindtap="allbtn">
+        <view class="hd-dcj" bindtap="allbtn1">
             <view class="dcj-icon">
                 <image src="../../images/cj.png"></image>
             </view>
@@ -27,7 +27,7 @@
                 待参加
             </view>
         </view>
-        <view class="hd-wwc" bindtap="allbtn">
+        <view class="hd-wwc" bindtap="allbtn2">
             <view class="wwc-icon">
                 <image src="../../images/wc.png"></image>
             </view>
@@ -35,7 +35,7 @@
                 未完成
             </view>
         </view>
-        <view class="hd-other" bindtap="allbtn">
+        <view class="hd-other" bindtap="allbtn3">
             <view class="other-icon">
                 <image src="../../images/other.png"></image>
             </view>

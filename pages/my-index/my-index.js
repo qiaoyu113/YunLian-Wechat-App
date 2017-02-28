@@ -1,4 +1,6 @@
 var app = getApp()
+var vlu = app.globalData.register
+console.log()
 Page({
   data: {
     imgUrls:[
@@ -31,7 +33,7 @@ Page({
       jia:'35',
       shou:'98'
     }],
-    register:false,
+    register:'vlu',
     indicatorDots: true,
     autoplay: false,
     interval: 5000,
@@ -64,7 +66,80 @@ Page({
     })
   },
   allbtn:function(){
-      wx.navigateTo({ url: '../my-activities/my-activities' })
+      wx.navigateTo({ 
+        url: '../my-activities/my-activities?step=1' 
+      })
+      //发送请求，获取数据
+      wx.request({
+        url: 'test.php',
+        data: {
+          x: '' ,
+          y: ''
+        },
+        header:{
+            "Content-Type":"application/json"
+        },
+        success: function(res) {
+          var data = res.data;
+        }
+      });
+  },
+  allbtn1:function(){
+      wx.navigateTo({ 
+        url: '../my-activities/my-activities?step=2' 
+      })
+      //发送请求，获取数据
+      wx.request({
+        url: 'test.php',
+        data: {
+          x: '' ,
+          y: ''
+        },
+        header:{
+            "Content-Type":"application/json"
+        },
+        success: function(res) {
+          var data = res.data;
+        }
+      });
+  },
+  allbtn2:function(){
+      wx.navigateTo({ 
+        url: '../my-activities/my-activities?step=3' 
+      })
+      //发送请求，获取数据
+      wx.request({
+        url: 'test.php',
+        data: {
+          x: '' ,
+          y: ''
+        },
+        header:{
+            "Content-Type":"application/json"
+        },
+        success: function(res) {
+          var data = res.data;
+        }
+      });
+  },
+  allbtn3:function(){
+      wx.navigateTo({ 
+        url: '../my-activities/my-activities?step=4' 
+      })
+      //发送请求，获取数据
+      wx.request({
+        url: 'test.php',
+        data: {
+          x: '' ,
+          y: ''
+        },
+        header:{
+            "Content-Type":"application/json"
+        },
+        success: function(res) {
+          var data = res.data;
+        }
+      });
   },
   onwxLoad: function () {
 		var page = this
@@ -100,7 +175,25 @@ Page({
             nicname:res.userInfo.nickName
           })
         }
+      }),
+      //请求判断该用户是否登录过
+      wx.request({
+        url: 'test.php', //仅为示例，并非真实的接口地址
+        data: {
+          x: '' ,
+          y: ''
+        },
+        header: {
+            'content-type': 'application/json'
+        },
+        success: function(res) {
+          console.log(res.data)
+        }
       })
+  },
+  onShow:function() {
+    register = app.globalData.register
+    console.log(register)
   },
 })
 

@@ -19,7 +19,7 @@
     </view>
     <div class="zhuti" wx:if="{{type=='1'}}">
         <ul>
-            <li wx:for="{{zhuti}}" bindtap="click1">{{item}}</li>
+            <li wx:for="{{zhuti}}" data-index="{{index}}" bindtap="clicked">{{item}}</li>
         </ul>
     </div>
     <div wx:if="{{type=='2'}}">
@@ -27,7 +27,7 @@
     </div>
     <div class="shijian" wx:if="{{shijian=='1'}}">
         <ul>
-            <li wx:for="{{map}}">{{item}}</li>
+            <li wx:for="{{map}}" data-index="{{index}}" bindtap="clickedmap">{{item}}</li>
         </ul>
     </div>
     <div wx:if="{{shijian=='2'}}">
@@ -35,7 +35,7 @@
     </div>
     <div class="fanwei" wx:if="{{fanwei=='1'}}">
         <ul>
-            <li wx:for="{{time}}">{{item}}</li>
+            <li wx:for="{{time}}" data-index="{{index}}" bindtap="clickedtime">{{item}}</li>
         </ul>
     </div>
     <div wx:if="{{fanwei=='2'}}">
@@ -45,7 +45,7 @@
         <view class="commiditys">
             <view class="hot">
                 <!--<view class="label">活动详情</view>-->
-                    <view class="hot-wrap" wx:for="{{json}}" >
+                    <view class="hot-wrap"  wx:for="{{json}}" >
                         <view class="hot-item" data-id="{{item.id}}" bindtap="toast">
                             <view class="hot-bor">
                                 <view class="pic">

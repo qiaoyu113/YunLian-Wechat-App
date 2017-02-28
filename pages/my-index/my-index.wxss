@@ -28,7 +28,7 @@
     line-height:40rpx;
     margin:auto;
     text-align:center;
-    margin-top:20rpx;
+    margin-top:45rpx;
 }
 .top-right-1{
     font-size:30rpx;

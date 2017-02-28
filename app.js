@@ -24,11 +24,8 @@ App({
       })
     }
   },
-  conf:{
-    host:"https://127.0.0.1"
-  },
   globalData:{
-    
+    register:false, //是否登录
   },
   onshow:function(){
     console.log('程序从后台进入前台时启动');

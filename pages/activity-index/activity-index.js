@@ -110,20 +110,83 @@ Page({
         shijian:2
     });
   },
-  click:function(e){
+  clicked:function(e){
     var that = this;
-    this.serData({
-
+    var index = parseInt(e.currentTarget.dataset.index);
+    console.log("index" + index);
+    that.setData({
+      type:2
+    })
+    wx.connectSocket({
+      url: 'test.php?index ='+index,
+      data:{
+        x: '',
+        y: ''
+      },
+      header:{ 
+        'content-type': 'application/json'
+      },
+      method:"GET"
+    })
+  },
+  clickedmap:function(e){
+    var that = this;
+    var index = parseInt(e.currentTarget.dataset.index);
+    console.log("map" + index);
+    that.setData({
+      shijian:2
+    })
+    wx.connectSocket({
+      url: 'test.php?map ='+index,
+      data:{
+        x: '',
+        y: ''
+      },
+      header:{ 
+        'content-type': 'application/json'
+      },
+      method:"GET"
+    })
+  },
+  clickedtime:function(e){
+    var that = this;
+    var index = parseInt(e.currentTarget.dataset.index);
+    console.log("time" + index);
+    that.setData({
+      fanwei:2
+    })
+    wx.connectSocket({
+      url: 'test.php?time ='+index,
+      data:{
+        x: '',
+        y: ''
+      },
+      header:{ 
+        'content-type': 'application/json'
+      },
+      method:"GET"
     })
   },
   toast:function(e){
         var actId = e.currentTarget.dataset.id;
         var url = '../activity-detail/activity-detail';
-        console.log(url)
+        console.log(actId)
         wx.navigateTo({
           url: url,
           success: function(res){
-            // success
+            wx.request({
+              url: 'test.php?actId='+actId,
+              data: {
+                x: '' ,
+                y: ''
+              },
+              header:{
+                  "Content-Type":"application/json"
+              },
+              success: function(res) {
+                var data = res.data;
+              }
+            });
           },
           fail: function() {
             // fail

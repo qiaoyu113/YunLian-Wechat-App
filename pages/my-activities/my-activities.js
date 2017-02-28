@@ -5,6 +5,7 @@ Page({
   data: {
     motto: 'Hello World',
     userInfo: {},
+    step:'',
     json:[{
       tit:'2017创新中国春季峰会',
       img:'../../images/111.jpg',
@@ -53,8 +54,11 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+  onLoad: function (options) {
     console.log('this.json')
+    this.setData({
+      step:options.step
+    })
     var that = this
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function(userInfo){

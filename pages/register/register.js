@@ -10,9 +10,9 @@ var hintMsg = null // 提示
 var check = require("../../utils/check.js")  
 var webUtils = require("../../utils/registerWebUtil.js")  
 var step_g = 1  
-var repetition = true;//验证电话号是否绑定过微信号
+var repetition = false;//验证电话号是否绑定过微信号
 var phoneNum = null, identifyCode = null, password = null, rePassword = null;  
-  
+var register = app.globalData.register
 Page({  
     data: {  
         windowWidth : 0,  
@@ -52,7 +52,8 @@ Page({
     },  
     nextStep :function(){  
         var that = this
-        if(repetition == false){
+        // console.log(repetition)
+        if(repetition == false){//没有绑定过手机号
             if(step_g == 1){  
                 if(firstStep()){  
                     step_g = 2  
@@ -76,18 +77,24 @@ Page({
             }else{  
                 if(thirdStep()){  
                     // 完成注册  
-                    wx.navigateBack({  
-                    delta: 2 
+                    // wx.navigateBack({  
+                    // delta: 2 
+                    // })
+                    wx.switchTab({
+                        success: function(res) {
+                            app.globalData.register = true
+                            return 
+                        },
+                        url: '../my-index/my-index',
                     })
                 }  
             }  
-        }else{
-            wx.makePhoneCall({
-  phoneNumber: '1340000' //仅为示例，并非真实的电话号码
-})
-            setTimeout(function(){
-                wx.hideToast()
-            },2000)
+        }else{          //该手机号已经绑定过手机号
+            wx.showToast({  
+                  title: '该手机已绑定微信号',  
+                  icon: 'loading',  
+                  duration: 700  
+            }) 
         }  
   
         if(hintMsg != null){  

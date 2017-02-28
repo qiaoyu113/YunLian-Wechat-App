@@ -1,7 +1,10 @@
 <!--index.wxml-->
 <view class="container">
   <view class="hd-top">
-    <view class="hd-top-tit">全部</view>
+    <view class="hd-top-tit" wx:if="{{step == 1}}">全部</view>
+    <view class="hd-top-tit" wx:if="{{step == 2}}">待参加</view>
+    <view class="hd-top-tit" wx:if="{{step == 3}}">未完成</view>
+    <view class="hd-top-tit" wx:if="{{step == 4}}">其他</view>
   </view>
   <view class="hd-center" wx:for="{{json}}">
     <view class="hd-center1">
