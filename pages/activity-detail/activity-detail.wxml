@@ -1,11 +1,11 @@
 <!--logs.wxml-->
 <view class="page-index">
   <view class="top-img" >
-    <!--<image src="{{'http://test.resource.vjuzhen.com/'+logs.activityPoster}}"></image>-->
-    <image src="../../images/111.jpg"></image>
+    <image src="{{'http://test.resource.vjuzhen.com/'+logs.activityPoster}}"></image>
+    <!--<image src="../../images/111.jpg"></image>-->
   </view>
   <view class="top-text">
-    {{logs.activityTitle}}111
+    {{logs.activityTitle}}
   </view>
   <!--活动详情模块-->
   <view class="page-message">
@@ -13,10 +13,10 @@
     <view class="message-time">
       <view class="time-left"><image src="../../images/time.png" style="width: 40rpx; height: 40rpx;"></image></view>
       <view class="time-right">
-        <view class="time-right-1">01/23/ 17:00 至 01/23/ 19:00
+        <view class="time-right-1">{{logs.actStartTime}} 至 {{logs.actEndTime}}
           <span>已结束</span>
         </view>
-        <view class="time-right-2">01/23/ 17:00 至 01/23/ 19:00
+        <view class="time-right-2">{{logs.signupStartTime}} 至 {{logs.signupEndTime}}
           <span>报名截止</span>
         </view>
       </view>
@@ -27,7 +27,7 @@
         <image src="../../images/add.png" style="width: 40rpx; height: 40rpx;"></image>
       </view>
       <view class="add-right">
-        {{logs.prov}}{{log.city}}
+        {{logs.prov}}{{logs.city}}
       </view>
     </view>
     <!--报名人数-->
@@ -36,7 +36,7 @@
         <image src="../../images/peo.png" style="width: 40rpx; height: 40rpx;"></image>
       </view>
       <view class="peo-right">
-        11人已报名
+        {{logs.actApplyNum}}人已报名
       </view>
     </view>
     <!--价格-->
@@ -45,7 +45,7 @@
           <image src="../../images/money.png" style="width: 40rpx; height: 40rpx;"></image>
         </view>
         <view class="money-right">
-          免费
+          {{logs.tickets[0].detail}}
         </view>
     </view>
   </view>
@@ -55,7 +55,10 @@
       <view class="top1-text">活动详情</view>
     </view>
     <view class="activity-center">
-        一度金融的消息称，乐视金融同数码视讯的接触尚处在高层范围内进行，因此对于收购价格，暂时还不能确定。按照市场预估价在5亿至10亿人民币。
+        <import src="../../wxParse/wxParse.wxml"/> 
+        <view class="wxParse">
+            <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+        </view>
     </view>
   </view>
 </view>

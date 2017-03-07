@@ -140,21 +140,34 @@ page{
     right:130rpx;
     top:25rpx;
 }
-.border{
+.img-box{
     width:300rpx;
     height:300rpx;
     position:absolute;
     left:0;
     right:0;
     margin:auto;
-    top:120rpx;
+    top:103rpx;
     border:1rpx dashed #B8CEDC;
     padding:20rpx;
     box-sizing: border-box;
     background:#fff;
 }
-.border image{
+.img-box image{
     width:260rpx;
     height:260rpx;
     margin-top:20rpx;
+}
+.piaonum{
+    position:absolute;
+    margin:auto;
+    left:0;
+    right:0;
+    bottom:0;
+    font-size:24rpx;
+    color:#ADADAD;
+}
+swiper{
+    width:100%;
+    height:100%;
 }

@@ -25,7 +25,14 @@ App({
     }
   },
   globalData:{
-    register:false, //是否登录
+    register:false, //没有登录登录
+    regyes:true,
+    // contextUrl:'http://test.sqt.vjuzhen.com',
+    contextUrl:'https://dutao.s1.natapp.cc/activity.html?format=json',
+    resourceUrl:'http://test.resource.vjuzhen.com/',
+    myUrl:'https://dutao.s1.natapp.cc/open/wx/myact.html?format=json',
+    xqUrl:'https://dutao.s1.natapp.cc/activity/',
+    piaoUrl:'https://dutao.s1.natapp.cc/open/wx/mt/'
   },
   onshow:function(){
     console.log('程序从后台进入前台时启动');

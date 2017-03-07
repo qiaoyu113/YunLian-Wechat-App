@@ -87,6 +87,7 @@ Page({
                         },
                         url: '../my-index/my-index',
                     })
+                    console.log(register)
                 }  
             }  
         }else{          //该手机号已经绑定过手机号

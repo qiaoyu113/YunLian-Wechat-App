@@ -6,30 +6,41 @@
     <view class="hd-top-tit" wx:if="{{step == 3}}">未完成</view>
     <view class="hd-top-tit" wx:if="{{step == 4}}">其他</view>
   </view>
-  <view class="hd-center" wx:for="{{json}}">
+  <view class="hd-center" wx:for="{{json}}" wx:if="{{status == 'OK'}}">
     <view class="hd-center1">
       <view class="hd-center-top">
         <view class="piao-top">
-           {{item.tit}}
+           {{item.activityTitle}}
         </view>
         <view class="piao-center">
           <view class="piao-center-left">
-            <image src="{{item.img}}"></image>
-            <view class="zt">未开始</view>
+            <image src="{{'http://test.resource.vjuzhen.com/' + item.activityPoster}}"></image>
+            <view class="zt" wx:if="{{item.actStauts == 0}}">未开始</view>
+            <view class="zt" wx:if="{{item.actStauts == 1}}">进行中</view>
+            <view class="zt" wx:if="{{item.actStauts == 2}}">已结束</view>
           </view>
           <view class="piao-center-right">
-            <view>开始时间：<span>{{item.time}}</span></view>
-            <view class="address">活动地点：<span>{{item.add}}</span></view>
-            <view>发布人：<span>{{item.peo}}</span></view>
-            <view>票价：<span>{{item.money}}</span></view>
+            <view>开始时间：<span>{{item.actStartTime}}</span></view>
+            <view class="address">活动地点：<span>{{item.prov}}{{item.city}}{{item.activityAddress}}</span></view>
+            <view>发布人：<span>{{item.publishUser}}</span></view>
+            <view>票价：<span>{{item.totalFee}}元</span></view>
           </view>
         </view>
         <view class="piao-bottom">
-          <view class="piao-bottom-left">{{item.pay}}</view>
-          <view class="piao-bottom-right">{{item.math}}张，共{{item.zong}}张</view>
+          <view class="piao-bottom-left" wx:if="{{item.status == 1}}">待支付</view>
+          <view class="piao-bottom-left" wx:if="{{item.status == 2}}">待审核</view>
+          <view class="piao-bottom-left" wx:if="{{item.status == 3}}">支付成功</view>
+          <view class="piao-bottom-left" wx:if="{{item.status == 4}}">已取消</view>
+          <view class="piao-bottom-left" wx:if="{{item.status == 5}}">申请退款</view>
+          <view class="piao-bottom-left" wx:if="{{item.status == 6}}">退款成功</view>
+          <view class="piao-bottom-left" wx:if="{{item.status == 7}}">退款失败</view>
+          <view class="piao-bottom-left" wx:if="{{item.status == 8}}">代发货</view>
+          <view class="piao-bottom-left" wx:if="{{item.status == 9}}">已领取</view>
+          <view class="piao-bottom-right">{{item.totalNum}}张，共{{item.totalFee}}元</view>
         </view>
       </view>
-      <view class="hd-center-bottom" bindtap="chakan">查看</view>
+      <view class="hd-center-bottom" data-id="{{item.actId}}"  bindtap="chakan">查看</view>
     </view>
   </view>
+  <view class="nothing" wx:if="{{status == 'error'}}">暂无内容</view>
 </view>

@@ -1,5 +1,9 @@
 /**index.wxss**/
+page{
+    height:100%;
+overflow:hidden;
 
+}
 .page-index{
   font-family: "Helvetica Neue",Helvetica,"Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif;
 }
@@ -135,6 +139,9 @@
 .shijian{
     width:100%;
     background:#fff;position:fixed;top:90rpx;z-index:20;border-bottom:1rpx solid #b2b2b2;
+    max-height:840rpx;
+    overflow-y:scroll;
+    -webkit-overflow-scrolling: touch;
 }
 .shijian ul li{
     width:90%;height:20rpx;display: block;font-size:26rpx;line-height:20rpx;padding:5%;float:left;border-bottom:1rpx solid #cecece;
@@ -151,4 +158,25 @@
     font-size:26rpx;
     float:left;
     margin-top:15rpx;
+}
+.body-view{
+    text-align: center;
+    font-size:26rpx;
+    line-height:60rpx;
+    color:#666;
+}
+.body-loding{
+    text-align: center;
+    font-size:26rpx;
+    line-height:60rpx;
+    color:#666;
+}
+.zhezhao{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.50);
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1;
 }

@@ -1,291 +1,544 @@
 var app = getApp()
+var urlapp = app.globalData.contextUrl;
+var page = 0;
+var pages = 1;
+var pages2 = 1;
+var pages3 = 1;
+var more = true;
+var nomore = false;
+var zhezhao1 = 2;
+var subjectUrl = '';
+var checked = 1;//监听是否点击过活动事件
+var map = ['所有地点','北京', '上海', '广州', '深圳', '杭州', '成都', '南京','苏州','武汉','天津','重庆','西安','厦门','宁波','郑州','青岛'];
+var time = ['不限', '今天', '明天', '本周', '本周末', '本月']
+var timevalue = ['all','today','tomorrow','week','weekend','month']
+var Newurl = '';
+var timeurl = '';
+var mapindex = ''
+var timeindex = ''
+var add = true;//控制进入是否是第一页
+var thispages2 = 1;
+var subjectUrl2 = '';//监听点击事件之后的流加载路径
+var zhuti = [];
+var json = [];
+var thispages3 = 1;
+
+
+
+
+//时间戳转换时间  
+function toDate(number) {
+  var n = number;
+  var date = new Date(n);
+  var Y = date.getFullYear() + '-';
+  var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+  var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+  return (Y + M + D)
+}
+
+
+// 获取数据的方法，具体怎么获取列表数据大家自行发挥  
+var loadMore = function (that) {
+  var zhuti = [];
+  that.setData({
+    hidden: 1,
+  });
+  wx.request({
+    url: urlapp + '&pageNo=' + pages,
+    data: {
+      page: page,
+      zhuti: zhuti
+    },
+    success: function (res) {
+      var json = that.data.json;
+      // console.log(res.data.pages.datas.length)
+      var length = res.data.pages.datas.length
+      var zong = res.data.pages.totalPage
+      var pp = pages
+      var zleng = res.data.aList
+      for (var i = 0; i < zleng.length; i++) {
+        zhuti.push(zleng[i])
+      }
+      if (pp <= zong) {
+        for (var i = 0; i < length; i++) {
+          res.data.pages.datas[i].publishTime = toDate(res.data.pages.datas[i].publishTime)
+
+          json.push(res.data.pages.datas[i]);
+        }
+
+        if(zong==1||length==0){
+          that.setData({
+            nomore: true,
+            more: false,
+          });
+        }else{
+          that.setData({
+            nomore: false,
+            more: true,
+          });
+        }
+        pages++;
+        more = true;
+        nomore = false;
+      } else {
+        that.setData({
+          nomore: true,
+          more: false,
+        });
+
+      }
+
+      that.setData({
+        json: json,
+        zhuti: zhuti
+      });
+
+      that.setData({
+        hidden: true
+      });
+    }
+  });
+}
+
+var checkMore = function (that) {
+      if(add==true){
+        zhuti = [];
+        json = [];
+        thispages2 = pages2;
+        subjectUrl2 = subjectUrl
+      }else{
+        zhuti = [];
+        subjectUrl2 = subjectUrl2
+      }
+      wx.request({
+        url: subjectUrl2,
+        success: function (res) {
+          // console.log(res.data.pages.datas[i]) 
+          // console.log(url);
+          var totalCount = res.data.pages.datas.length
+          var totalPage = res.data.pages.totalPage
+          var zongpage = thispages2
+          var zleng = res.data.aList
+          for (var i = 0; i < zleng.length; i++) {
+            zhuti.push(zleng[i])
+          }
+          // console.log(zhuti)
+          if (zongpage <= totalPage) {
+            for (var i = 0; i < totalCount; i++) {
+              res.data.pages.datas[i].publishTime = toDate(res.data.pages.datas[i].publishTime)
+              json.push(res.data.pages.datas[i]);
+            }
+            if(totalPage==1||totalCount==0){
+              that.setData({
+                nomore: true,
+                more: false,
+              });
+            }else{
+              that.setData({
+                nomore: false,
+                more: true,
+              });
+            }
+            thispages2++;
+            add = false;
+          } else {
+            that.setData({
+              nomore: true,
+              more: false,
+            });
+
+          }
+
+          that.setData({
+            json: json,
+            zhuti: zhuti,
+            hidden: true
+          });
+        }
+      })
+}
+
+var mapMore = function (that) {
+      if(mapindex==0){
+         Newurl = urlapp
+         if(add==true){
+          zhuti = [];
+          json = [];
+          thispages3 = pages3;
+        }else{
+          zhuti = [];
+        }
+      }else{
+        if(add==true){
+          zhuti = [];
+          json = [];
+          thispages3 = pages3;
+        }else{
+          zhuti = [];
+        }
+        Newurl = urlapp+'&address=' + map[mapindex]+'&pageNo='+thispages3
+      }
+      Newurl = encodeURI(Newurl)
+      console.log(Newurl)
+      console.log('thispages3'+thispages3)
+      wx.request({
+        url: Newurl,
+        success: function (res) {
+          // console.log(res.data.pages.datas[i]) 
+          // console.log(url);
+          var totalCount = res.data.pages.datas.length
+          var totalPage = res.data.pages.totalPage
+          var zongpage = thispages3
+          var zleng = map
+          for (var i = 0; i < zleng.length; i++) {
+            zhuti.push(zleng[i])
+          }
+          // console.log(zhuti)
+          if (zongpage <= totalPage) {
+            for (var i = 0; i < totalCount; i++) {
+              res.data.pages.datas[i].publishTime = toDate(res.data.pages.datas[i].publishTime)
+              json.push(res.data.pages.datas[i]);
+            }
+            if(totalPage==1||totalCount==0){
+              that.setData({
+                nomore: true,
+                more: false,
+              });
+            }else{
+              that.setData({
+                nomore: false,
+                more: true,
+              });
+            }
+            thispages3++;
+            add = false
+          } else {
+            that.setData({
+              nomore: true,
+              more: false,
+            });
+
+          }
+
+          that.setData({
+            json: json,
+            zhuti: zhuti,
+            hidden: true
+          });
+        }
+      })
+}
+
+var timeMore = function (that) {
+      if(timeindex==0){
+         timeurl = urlapp
+         if(add==true){
+          zhuti = [];
+          json = [];
+          thispages3 = pages3;
+        }else{
+          zhuti = [];
+        }
+      }else{
+        if(add==true){
+          zhuti = [];
+          json = [];
+          thispages3 = pages3;
+        }else{
+          zhuti = [];
+        }
+        timeurl = urlapp+'&time=' + timevalue[timeindex]+'&pageNo='+thispages3
+      }
+      // timeurl = encodeURI(timeurl)
+      console.log(timeurl)
+      console.log('thispages3'+thispages3)
+      wx.request({
+        url: timeurl,
+        success: function (res) {
+          // console.log(res.data.pages.datas[i]) 
+          // console.log(url);
+          var totalCount = res.data.pages.datas.length
+          var totalPage = res.data.pages.totalPage
+          var zongpage = thispages3
+          var zleng = time
+          for (var i = 0; i < zleng.length; i++) {
+            zhuti.push(zleng[i])
+          }
+          // console.log(zhuti)
+          if (zongpage <= totalPage) {
+            for (var i = 0; i < totalCount; i++) {
+              res.data.pages.datas[i].publishTime = toDate(res.data.pages.datas[i].publishTime)
+              json.push(res.data.pages.datas[i]);
+            }
+            if(totalPage==1||totalCount==0){
+              that.setData({
+                nomore: true,
+                more: false,
+              });
+            }else{
+              that.setData({
+                nomore: false,
+                more: true,
+              });
+            }
+            thispages3++;
+            add = false
+          } else {
+            that.setData({
+              nomore: true,
+              more: false,
+            });
+
+          }
+
+          that.setData({
+            json: json,
+            zhuti: zhuti,
+            hidden: true
+          });
+        }
+      })
+}
+
 Page({
   data: {
-    imgUrls:[
-      '../../images/111.jpg',
-      '../../images/111.jpg'
-    ],
-    json: [{
-      img:'../../images/111.jpg',
-      tit:'云狮会数字营销论坛（第十三期）视频营销新时代',
-      jia:'35',
-      shou:'98',
-      time:'2017-09-27'
-    },{
-      img:'../../images/111.jpg',
-      tit:'云狮会数字营销论坛（第16期）：自媒体变现的道与术',
-      jia:'35',
-      shou:'98',
-      time:'2017-09-27'
-    },{
-      img:'../../images/111.jpg',
-      tit:'云狮会数字营销论坛（第十三期）视频营销新时代',
-      jia:'35',
-      shou:'98',
-      time:'2017-09-27'
-    },{
-      img:'../../images/111.jpg',
-      tit:'云狮会数字营销论坛（第十三期）视频营销新时代',
-      jia:'35',
-      shou:'98',
-      time:'2017-09-27'
-    },{
-      img:'../../images/111.jpg',
-      tit:'云狮会数字营销论坛（第十三期）视频营销新时代',
-      jia:'35',
-      shou:'98',
-      time:'2017-09-27'
-    },{
-      img:'../../images/111.jpg',
-      tit:'云狮会数字营销论坛（第十三期）视频营销新时代',
-      jia:'35',
-      shou:'98',
-      time:'2017-09-27'
-    },{
-      img:'../../images/111.jpg',
-      tit:'云狮会数字营销论坛（第十三期）视频营销新时代',
-      jia:'35',
-      shou:'98',
-      time:'2017-09-27'
-    }],
-	  showView:true,
+    hidden: true,
+    list: [],
+    scrollTop: 0,
+    scrollHeight: 0,
+    json: [],
+    showView: true,
     indicatorDots: true,
     autoplay: false,
     interval: 5000,
     duration: 1000,
     type: 2,
-    shijian:2,
-    message:{
-      a:'云狮会数字营销论坛（第十三期）视频营销新时代',
-      b:'云狮会数字营销论坛（第16期）：自媒体变现的道与术'
+    shijian: 2,
+    nomore: nomore,
+    more: more,
+    zhezhao: zhezhao1,
+    contextUrl: app.globalData.contextUrl,
+    resourceUrl: app.globalData.resourceUrl,
+    message: {
+      a: '云狮会数字营销论坛（第十三期）视频营销新时代',
+      b: '云狮会数字营销论坛（第16期）：自媒体变现的道与术'
     },
-    map:['北京','222','333','444','555','666','777'],
-    zhuti:['所有主题','美妆','食品','汽车','物流','旅游','3C','教育'],
-    time:['不限','今天','明天','本周','本周末','本月']
+    map: map,
+    zhuti: [],
+    time: time,
   },
-  changeIndicatorDots: function(e) {
-    this.setData({
-      indicatorDots: !this.data.indicatorDots
-    })
+
+  //AJAX加载
+  onLoad: function onLoad() {
+    var $this = this;
+    $this.setData({
+      hasRefesh: true,
+      more: true,
+    });
+    wx.getSystemInfo({
+      success: function (res) {
+        $this.setData({
+          scrollHeight: res.windowHeight
+        });
+      }
+    });
+    // wx.setStorage({
+    //     key: 'JSESSIONID',
+    //     success: function success(res) {
+    //         wx.request({
+    //             url: 'https://dutao.s1.natapp.cc/open/acts.html',
+    //             success: function success(res) {
+    //                     $this.setData({
+    //                         hiddenLoading: true,
+    //                         json: res.data.obj.datas,
+    //                         hidden: true,
+    //                         hasRefesh:false,
+    //                     });
+    //             }
+    //         });
+    //     },
+    //     fail: function fail() {
+    //         wx.redirectTo({ url: '../index/index' });
+    //     }
+    // })
+
+    loadMore($this);
   },
-  changeAutoplay: function(e) {
-    this.setData({
-      autoplay: !this.data.autoplay
-    })
-  },
-  intervalChange: function(e) {
-    this.setData({
-      interval: e.detail.value
-    })
-  },
-  durationChange: function(e) {
-    this.setData({
-      duration: e.detail.value
-    })
-  },
-  tapName: function(e) {
+
+  //主题选择（按钮）
+  tapName: function (e) {
     var that = this;
     var type = that.data.type === '1' ? '2' : '1';
+    if (zhezhao1 == 2 || type == 1) {
+      zhezhao1 = 1
+    } else {
+      zhezhao1 = 2
+    }
     that.setData({
-        type: type,
-        shijian:2,
-        fanwei:2
+      type: type,
+      shijian: 2,
+      fanwei: 2,
+      zhezhao: 2,
+      zhezhao: zhezhao1
     });
   },
-  taptime:function(e){
+  //时间地点选择（按钮）
+  taptime: function (e) {
     var that = this;
     var shijian = that.data.shijian === '1' ? '2' : '1';
+    if (zhezhao1 == 2 || shijian == 1) {
+      zhezhao1 = 1
+    } else {
+      zhezhao1 = 2
+    }
     that.setData({
-        shijian: shijian,
-        type:2,
-        fanwei:2
+      shijian: shijian,
+      type: 2,
+      fanwei: 2,
+      zhezhao: 2,
+      zhezhao: zhezhao1
     });
   },
-  tapfan:function(e){
+  //时间范围选择（按钮）
+  tapfan: function (e) {
     var that = this;
     var fanwei = that.data.fanwei === '1' ? '2' : '1';
+    if (zhezhao1 == 2 || fanwei == 1) {
+      zhezhao1 = 1
+    } else {
+      zhezhao1 = 2
+    }
     that.setData({
-        fanwei: fanwei,
-        type:2,
-        shijian:2
+      fanwei: fanwei,
+      type: 2,
+      shijian: 2,
+      zhezhao: zhezhao1
     });
   },
-  clicked:function(e){
-    var that = this;
-    var index = parseInt(e.currentTarget.dataset.index);
-    console.log("index" + index);
-    that.setData({
-      type:2
-    })
-    wx.connectSocket({
-      url: 'test.php?index ='+index,
-      data:{
-        x: '',
-        y: ''
-      },
-      header:{ 
-        'content-type': 'application/json'
-      },
-      method:"GET"
-    })
-  },
-  clickedmap:function(e){
-    var that = this;
-    var index = parseInt(e.currentTarget.dataset.index);
-    console.log("map" + index);
-    that.setData({
-      shijian:2
-    })
-    wx.connectSocket({
-      url: 'test.php?map ='+index,
-      data:{
-        x: '',
-        y: ''
-      },
-      header:{ 
-        'content-type': 'application/json'
-      },
-      method:"GET"
-    })
-  },
-  clickedtime:function(e){
-    var that = this;
-    var index = parseInt(e.currentTarget.dataset.index);
-    console.log("time" + index);
-    that.setData({
-      fanwei:2
-    })
-    wx.connectSocket({
-      url: 'test.php?time ='+index,
-      data:{
-        x: '',
-        y: ''
-      },
-      header:{ 
-        'content-type': 'application/json'
-      },
-      method:"GET"
-    })
-  },
-  toast:function(e){
-        var actId = e.currentTarget.dataset.id;
-        var url = '../activity-detail/activity-detail';
-        console.log(actId)
-        wx.navigateTo({
-          url: url,
-          success: function(res){
-            wx.request({
-              url: 'test.php?actId='+actId,
-              data: {
-                x: '' ,
-                y: ''
-              },
-              header:{
-                  "Content-Type":"application/json"
-              },
-              success: function(res) {
-                var data = res.data;
-              }
-            });
-          },
-          fail: function() {
-            // fail
-          },
-          complete: function() {
-            // complete
-          }
-        })
-      }
-})
 
-// Page({
-// 	    data: {
-// 			zhuti:['所有主题','美妆','食品','汽车','物流','旅游','3C','教育'],
-// 	    hiddenLoading: true,
-// 			type: '图片',
-// 	    json: {
-        
-//       },
-// 			showView:true,
-//       indicatorDots: true,
-//       autoplay: false,
-//       interval: 5000,
-//       duration: 1000,
-//       type: 2,
-//       shijian:2,
-//       message:{
-//         a:'云狮会数字营销论坛（第十三期）视频营销新时代',
-//         b:'云狮会数字营销论坛（第16期）：自媒体变现的道与术'
-//       },
-//       map:['北京','222','333','444','555','666','777'],
-//       zhuti:['所有主题','美妆','食品','汽车','物流','旅游','3C','教育'],
-//       time:['不限','今天','明天','本周','本周末','本月'],
-// 	    },
-// 	    onLoad: function onLoad() {
-// 	        var $this = this;
-// 	        $this.setData({
-// 	            hiddenLoading: false
-// 	        });
-// 	        wx.setStorage({
-// 	            key: 'JSESSIONID',
-// 	            success: function success(res) {
-// 	                wx.request({
-// 	                    url: 'https://dutao.s1.natapp.cc/open/acts.html',
-// 	                    success: function success(res) {
-// 	                            $this.setData({
-// 	                                hiddenLoading: true,
-// 	                                json: res.data.obj.datas
-// 	                            });
-// 	                    }
-// 	                });
-// 	            },
-// 	            fail: function fail() {
-// 	                wx.redirectTo({ url: '../index/index' });
-// 	            }
-// 	        })
-//       },
-//       tapName: function(e) {
-//         var that = this;
-//         var type = that.data.type === '1' ? '2' : '1';
-//         that.setData({
-//             type: type,
-//             shijian:2,
-//             fanwei:2
-//         });
-//       },
-//       taptime:function(e){
-//         var that = this;
-//         var shijian = that.data.shijian === '1' ? '2' : '1';
-//         that.setData({
-//             shijian: shijian,
-//             type:2,
-//             fanwei:2
-//         });
-//       },
-//       tapfan:function(e){
-//         var that = this;
-//         var fanwei = that.data.fanwei === '1' ? '2' : '1';
-//         that.setData({
-//             fanwei: fanwei,
-//             type:2,
-//             shijian:2
-//         });
-//       },
-//       toast:function(e){
-//         var actId = e.currentTarget.dataset.id;
-//         var url = '../logs/logs?actId='+actId;
-//         console.log(url)
-//         wx.navigateTo({
-//           url: url,
-//           success: function(res){
-//             // success
-//           },
-//           fail: function() {
-//             // fail
-//           },
-//           complete: function() {
-//             // complete
-//           }
-//         })
-//       }
-//   })
+
+  //点击查看详情页
+  toast: function (e) {
+    var actId = e.currentTarget.dataset.id;
+    var url = '../activity-detail/activity-detail?actId=' + actId;
+    wx.navigateTo({
+      url: url,
+      success: function (res) {
+        // success
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // complete
+      }
+    })
+  },
+
+  //点击选择主题选项
+  clicked: function (e) {
+    thispages2 = 1
+    add = true;
+    checked = 2;
+    console.log(checked)
+    var that = this;
+    var index = e.currentTarget.dataset.id;
+    subjectUrl = urlapp + '&subject=' + index;
+    console.log(subjectUrl)
+    that.setData({
+      type: 2,
+      zhezhao: 2,
+      scrollTop:0
+    })
+    checkMore(that)
+  },
+
+  //点击选择地点选项
+  clickedmap: function (e) {
+    checked = 3;
+    add = true;
+    var that = this;
+    that.setData({
+      shijian: 2,
+      zhezhao: 2,
+      scrollTop:0
+    })
+    var index = parseInt(e.currentTarget.dataset.index);
+    mapindex = index
+    console.log(mapindex)
+    mapMore(that)
+    
+  },
+
+  //点击时间范围选项
+  clickedtime: function (e) {
+    var that = this;
+    checked = 4;
+    add = true;
+    that.setData({
+      fanwei: 2,
+      zhezhao: 2,
+      scrollTop:0
+    })
+    var index = parseInt(e.currentTarget.dataset.index);
+    timeindex = index
+    console.log('哈哈'+timeindex);
+    timeMore(that)
+  },
+  
+  
+  //点击遮罩层
+  nozhezhao: function (e) {
+    var that = this;
+    that.setData({
+      fanwei: 2,
+      zhezhao: 2,
+      type: 2,
+      shijian: 2,
+    })
+  },
+
+  //点击所有主题
+  alltheme:function(){
+    this.setData({
+      json:[],
+      fanwei: 2,
+      zhezhao: 2,
+      type: 2,
+      shijian: 2,
+    })
+    checked = 1
+    pages = 1
+    loadMore(this);
+    this.setData({
+      scrollTop:0
+    })
+  },
+
+
+  //页面滑动到底部
+  bindDownLoad: function () {
+    subjectUrl2 = ''
+    subjectUrl2 = subjectUrl + '&pageNo='+thispages2
+    var that = this;
+    if(checked==2){
+      checkMore(that)
+    }else if(checked==1){
+      loadMore(that);
+    }else if(checked==3){
+      mapMore(that)
+    }else{
+      timeMore(that)
+      console.log('shanchuwo')
+    }
+  },
+
+  scroll: function (event) {
+  //该方法绑定了页面滚动时的事件，我这里记录了当前的position.y的值,为了请求数据之后把页面定位到这来。
+    this.setData({
+      scrollTop: event.detail.scrollTop
+    });
+  },
+   
+
+})
