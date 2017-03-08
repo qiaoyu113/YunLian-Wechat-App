@@ -40,6 +40,18 @@
   margin-top:30rpx;
   border-radius: 20rpx;
 }
+.hd-center-bottom1{
+  background:#ADADAD;
+  width:150rpx;
+  height:40rpx;
+  text-align: center;
+  font-size:28rpx;
+  color:#fff;
+  margin:auto;
+  line-height:40rpx;
+  margin-top:30rpx;
+  border-radius: 20rpx;
+}
 .piao-top{
   font-size:28rpx;
   padding:10rpx;

@@ -1,65 +1,93 @@
 //logs.js
 var utils = require('../../utils/utils.js');
 var QR = require("../../utils/qrcode.js");
-var placeadd=[]//默认二维码生成文本;
 var app = getApp()
 var piaoUrl = app.globalData.piaoUrl
+var json = '';
+var placeholder = ''
+
+//时间戳
+function toDate(number) {
+  var n = number;
+  var date = new Date(n);
+  var Y = date.getFullYear() + '-';
+  var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '/';
+  var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+  var H = date.getHours();
+  var F = date.getMinutes()
+  return (Y + M + D +' '+ H + ':' + F )
+}
 
 Page({
   data:{
-    json:[{
-      name:'乔宇',
-      num:'1231412413',
-      zt:'待支付',
-      money:'288',
-      tit:'2017创新中国春季峰会',
-      time:'2017.04.21-2017.04.22',
-      address:'北京东城区北京国家会议中心绿卡就等放假垃圾啊水力发电垃圾啊收代理费',
-      number:'9847586021',
-      placeadd:'http://qizhigo.com'
-    },{
-      name:'乔宇',
-      num:'1231412413',
-      zt:'待支付',
-      money:'288',
-      tit:'2017创新中国春季峰会',
-      time:'2017.04.21-2017.04.22',
-      address:'北京东城区北京国家会议中心绿卡就等放假垃圾啊水力发电垃圾啊收代理费',
-      number:'9847586021',
-      placeadd:'http://qizhigo.com'
-    }],
+    // json:[{
+    //   name:'乔宇',
+    //   num:'1231412413',
+    //   zt:'待支付',
+    //   money:'288',
+    //   tit:'2017创新中国春季峰会',
+    //   time:'2017.04.21-2017.04.22',
+    //   address:'北京东城区北京国家会议中心绿卡就等放假垃圾啊水力发电垃圾啊收代理费',
+    //   number:'9847586021',
+    //   placeadd:'http://qizhigo.com'
+    // },{
+    //   name:'乔宇',
+    //   num:'1231412413',
+    //   zt:'待支付',
+    //   money:'288',
+    //   tit:'2017创新中国春季峰会',
+    //   time:'2017.04.21-2017.04.22',
+    //   address:'北京东城区北京国家会议中心绿卡就等放假垃圾啊水力发电垃圾啊收代理费',
+    //   number:'9847586021',
+    //   placeadd:'http://qizhigo.com'
+    // }],
+    json:json,
     maskHidden:true,
     imagePath:'',
-    placeholder:'',//默认二维码生成文本,
+    placeholder:placeholder,//默认二维码生成文本
     indicatorDots: true,
     autoplay: false,
     interval: 5000,
-    duration: 1000
+    duration: 1000,
   },
   onLoad:function(options){
-    console.log(options)
+    json = ''
+    var that = this
     var actId = options.actId
-    // placeadd:
      wx.request({
         url: piaoUrl + actId + '.html?format=json',
         data: {},
         method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
         // header: {}, // 设置请求的 header
         success: function(res){
-          console.log(res)
-          
+          res.data.actStartTime = toDate(res.data.actStartTime)
+          var piaodata = res.data
+          var piaoleng = piaodata.myTicket
+          console.log(piaoleng)
+          for(var i = 0;i<piaoleng.length;i++){//循环遍历二维码
+            placeholder = piaoleng[i].ticketUrl
+            that.setData({
+              placeholder:placeholder
+            })
+            var size = that.setCanvasSize();//动态设置画布大小
+            var initUrl = that.data.placeholder;
+            that.createQrCode(initUrl,"mycanvas",size.w,size.h);
+          }
+          json = piaodata;
+          that.setData({
+            json:json
+          })
+          console.log(json)
         },
         fail: function() {
           // fail
         },
       })
-    
-
   },
   onReady:function(){
-  	var size = this.setCanvasSize();//动态设置画布大小
-    var initUrl = this.data.placeholder;
-    this.createQrCode(initUrl,"mycanvas",size.w,size.h);
+  	// var size = this.setCanvasSize();//动态设置画布大小
+    // var initUrl = this.data.placeholder;
+    // this.createQrCode(initUrl,"mycanvas",size.w,size.h);
   },
   onShow:function(){
     

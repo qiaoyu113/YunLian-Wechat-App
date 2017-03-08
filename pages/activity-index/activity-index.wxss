@@ -69,7 +69,7 @@ overflow:hidden;
     height:170rpx;
 }
 .hot-item .hot-bor .title{
-    height:110rpx;
+    height:70rpx;
     line-height:42rpx;
     padding:0rpx 0;
     font-size:32rpx;
@@ -179,4 +179,15 @@ overflow:hidden;
     top:0;
     left:0;
     z-index:1;
+}
+.add{
+    color:#666;
+    font-size:26rpx;
+    float:left;
+    margin-top:15rpx;
+    width:90%;
+    white-space:nowrap; 
+    text-overflow:ellipsis; 
+    -o-text-overflow:ellipsis; 
+    overflow: hidden; 
 }

@@ -63,7 +63,7 @@ Page({
   },
   toast:function(e){
     var actId = e.currentTarget.dataset.id;
-    var url = '../index/index';
+    var url = '../apply/apply';
     console.log(url)
     wx.navigateTo({
       url: url,

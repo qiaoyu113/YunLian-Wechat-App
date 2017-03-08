@@ -39,7 +39,8 @@
           <view class="piao-bottom-right">{{item.totalNum}}张，共{{item.totalFee}}元</view>
         </view>
       </view>
-      <view class="hd-center-bottom" data-id="{{item.actId}}"  bindtap="chakan">查看</view>
+      <view class="hd-center-bottom" data-id="{{item.orderId}}"  bindtap="chakan" wx:if="{{item.status == 3||item.status == 9}}">查看</view>
+      <view class="hd-center-bottom1" data-id="{{item.orderId}}" wx:else>无电子票</view>
     </view>
   </view>
   <view class="nothing" wx:if="{{status == 'error'}}">暂无内容</view>

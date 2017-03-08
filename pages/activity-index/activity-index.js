@@ -51,7 +51,7 @@ var loadMore = function (that) {
     },
     success: function (res) {
       var json = that.data.json;
-      // console.log(res.data.pages.datas.length)
+      // console.log(res.data.pages.datas)
       var length = res.data.pages.datas.length
       var zong = res.data.pages.totalPage
       var pp = pages

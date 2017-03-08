@@ -45,6 +45,7 @@
                                 </view>
                                 <view class="text">
                                     <view class="title">{{item.activityTitle}}</view>
+                                    <view class="add">{{item.prov}}{{item.city}}{{item.activityAddress}}</view>
                                     <view class="time">{{item.publishTime}}</view>
                                     <view class="info">
                                         <view class="price">{{item.tickets[0].price}}</view>

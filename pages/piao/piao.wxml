@@ -1,34 +1,38 @@
 <view class="page">
 <swiper indicator-dots="{{indicatorDots}}"
   autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-    <swiper-item class="piao" wx:for="{{json}}">
+    <swiper-item class="piao" wx:for="{{json.myTicket}}">
         <view class="piao-top">
             <image src="../../images/poptop.png"></image>
         </view>
         <view class="piao-center">
             <image src="../../images/popcenter.png"></image>
-            <view class="name">{{item.name}}</view>
-            <view class="number">{{item.num}}</view>
-            <view class="zt">{{item.zt}}</view>
+            <view class="name">{{json.publishUser}}</view>
+            <view class="number">{{item.userPhone}}</view>
+            <view class="zt" wx:if="{{item.status == 1}}">待使用</view>
+            <view class="zt" wx:if="{{item.status == 2}}">已使用</view>
+            <view class="zt" wx:if="{{item.status == 3}}">已过期</view>
+            <view class="zt" wx:if="{{item.status == 4}}">退票中</view>
+            <view class="zt" wx:if="{{item.status == 5}}">已退票</view>
             <view class="img-box">
                 <canvas bindtap="previewImg" hidden="{{canvasHidden}}" style="width: 100%;height: 100%;background:#f1f1f1;" canvas-id="mycanvas"/>
-                <!--<image bindtap="previewImg" mode="scaleToFill" src="{{imagePath}}"></image>-->
+                <image bindtap="previewImg" mode="scaleToFill" src="{{imagePath}}"></image>
             </view>
-            <view class="piaonum">票号: {{item.number}}</view>
+            <view class="piaonum">票号: {{item.ticketNo}}</view>
         </view>
         <view class="piao-bottom">
             <image src="../../images/popdown.png"></image>
         </view>
         <view class="xiangqing">
-            <view class="leixing">商务票 <span>￥{{item.money}}</span> /张</view>
-            <view class="x2">{{item.tit}}</view>
+            <view class="leixing">商务票 <span>￥{{item.ticket.price}}</span> /张</view>
+            <view class="x2">{{item.ticket.name}}</view>
             <view class="x3">
                 <image src="../../images/wc.png"></image>
-                <view>开始时间：<span>{{item.time}}</span></view>
+                <view>开始时间：<span>{{json.actStartTime}}</span></view>
             </view>
             <view class="x4">
                 <image src="../../images/add.png"></image>
-                <view>{{item.address}}</view>
+                <view>{{json.prov}}{{json.city}}{{json.actAddress}}</view>
                 <view class="clean"></view>
             </view>
             <!--提示-->
