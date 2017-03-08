@@ -28,6 +28,7 @@ App({
     register:false, //没有登录登录
     regyes:true,
     // contextUrl:'http://test.sqt.vjuzhen.com',
+    domainUrl:'https://dutao.s1.natapp.cc/',
     contextUrl:'https://dutao.s1.natapp.cc/activity.html?format=json',
     resourceUrl:'http://test.resource.vjuzhen.com/',
     myUrl:'https://dutao.s1.natapp.cc/open/wx/myact.html?format=json',
