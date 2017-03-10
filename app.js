@@ -31,7 +31,6 @@ App({
     domainUrl:'https://dutao.s1.natapp.cc/',//服务器地址信息
     contextUrl:'https://dutao.s1.natapp.cc/activity.html?format=json',
     resourceUrl:'http://test.resource.vjuzhen.com/',
-    myUrl:'https://dutao.s1.natapp.cc/open/wx/myact.html?format=json',
     xqUrl:'https://dutao.s1.natapp.cc/activity/',
     piaoUrl:'https://dutao.s1.natapp.cc/open/wx/mt/'
   },
