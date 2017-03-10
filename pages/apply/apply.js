@@ -137,6 +137,7 @@ Page({
                 kind = res.data.activity.tickets[i].detail
                 limitNum = res.data.activity.tickets[i].limitNum
                 price = res.data.activity.tickets[i].price
+                totalNum = res.data.activity.tickets[i].totalNum
                 zong = price/100
                 tickets.push(res.data.activity.tickets[i]);
             }
