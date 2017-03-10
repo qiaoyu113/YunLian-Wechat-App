@@ -2,6 +2,7 @@ var utils = require('../../utils/utils.js');
 var WxParse = require('../../wxParse/wxParse.js');
 var app = getApp()
 var xqurl = app.globalData.xqUrl
+var actId = ''
 
 
 function toDate(number) {
@@ -29,6 +30,7 @@ Page({
   onLoad: function (options) {
     var $this = this;
     var htm = '';
+    actId = options.actId
     // console.log(options.actId)
     wx.request({
       url: xqurl + options.actId + '.html?format=json',
@@ -62,9 +64,7 @@ Page({
     
   },
   toast:function(e){
-    var actId = e.currentTarget.dataset.id;
-    var url = '../apply/apply';
-    console.log(url)
+    var url = '../apply/apply?actId=' + actId;
     wx.navigateTo({
       url: url,
       success: function(res){

@@ -27,7 +27,7 @@
         <image src="../../images/add.png" style="width: 40rpx; height: 40rpx;"></image>
       </view>
       <view class="add-right">
-        {{logs.prov}}{{logs.city}}
+        {{logs.prov}}{{logs.city}}{{logs.activityAddress}}
       </view>
     </view>
     <!--报名人数-->

@@ -2,40 +2,47 @@
     <!--票的详情页-->
     <view class="top">
         <view class="top-left">
-            <image src="../../images/111.jpg"></image>
+            <image src="{{'http://test.resource.vjuzhen.com/' + json.activityPoster}}"></image>
         </view>
         <view class="top-right">
-            <view class="top-right-tit">多多熊领航城教学中心春季班开班啦！</view>
-            <view class="top-right-time">时间：2017-02-28 至 2018-02-28</view>
-            <view class="top-right-address">地点：宝安区西乡街道107国道与航城大道交汇处中信领航里程花园4-44铺多多熊艺术家园</view>
+            <view class="top-right-tit">{{json.activityTitle}}</view>
+            <view class="top-right-time">时间：{{json.actStartTime}}至 {{json.actEndTime}}</view>
+            <view class="top-right-address">地点：{{json.prov}}{{json.city}}{{json.activityAddress}}</view>
         </view>
     </view>
     <!--选择票种标题-->
     <view class="top2">
         <span class="top2-left"></span><span class="top2-center">选择票种</span><span class="top2-right"></span>
     </view>
+
+
     <!--选择票种内容-->
-    <view class="top3">
-        <view class="top3-left">
-            <view class="top3-left-1">免费体验课</view>
-            <view class="top3-left-2">￥0.00</view>
-        </view>
-        <view class="top3-right">
-            <image src="../../images/dui.png"></image>
-        </view>
-    </view>
+    <radio-group class="radio-group" bindchange="radioChange">
+        <label class="radio top3" wx:for-items="{{tickets}}" id="{{item.totalNum}}" bindtap="totalNum" data-limitNum="{{item.limitNum}}">
+            <view class="top3-left">
+                <view class="top3-left-1">{{item.name}}</view>
+                <view class="top3-left-2">￥{{item.price}}.00</view>
+            </view>
+            <view class="top3-right">
+                <radio value="{{item.detail}}" checked="{{checked}}" />
+            </view>   
+        </label>
+    </radio-group>
     <!--报名（免费/收费）-->
-    <view class="apply">免费报名</view>
+    <view class="apply">{{kind}}</view>
+
+
+
     <!--购买票数-->
     <view class="top4">
-        <view class="top4-left">剩余99张/每人限购1张</view>
+        <view class="top4-left">剩余{{totalNum}}张/每人限购{{limitNum}}张</view>
         <view class="stepper">
             <!-- 减号 -->
-            <text class="{{minusStatuses[index]}} jian" data-index="{{index}}" bindtap="bindMinus">-</text>
+            <text class="jian" data-index="{{num}}" bindtap="bindMinus">-</text>
             <!-- 数值 -->
-            <input class="inp" type="number" bindchange="bindManual" value="{{json.num}}" />
+            <input class="inp" type="number" bindchange="bindManual" value="{{num}}" readOnly="true" disabled/>
             <!-- 加号 -->
-            <text class="normal" data-index="{{index}}" bindtap="bindPlus">+</text>
+            <text class="normal" data-index="{{num}}" bindtap="bindPlus">+</text>
        </view>
     </view>
     <!--报名信息标题-->
@@ -45,22 +52,55 @@
         <view class="title-right"></view>
     </view>
     <!--报名信息详情-->
-    <view class="particulars">
+    <view class="particulars" wx:for="{{staffSign}}">
         <!--姓名-->
-        <view class="name particulars-list">姓名<span>*</span></view>
-        <input class="particulars-inp" type="text" placeholder="请输入内容"/>
-        <!--手机-->
-        <view class="phone particulars-list">手机<span>*</span></view>
-        <input class="particulars-inp" type="number" placeholder="请输入内容"/>
-        <!--小朋友年龄-->
-        <view class="phone particulars-list">小朋友年龄<span>*</span></view>
-        <input class="particulars-inp" type="text" placeholder="请输入内容"/>
-        <!--住址-->
-        <view class="phone particulars-list">住址<span>*</span></view>
-        <input class="particulars-inp" type="text" placeholder="请输入内容"/>
-        <!--体验课适合时间-->
-        <view class="phone particulars-list">体验课适合时间<span>*</span></view>
-        <input class="particulars-inp" type="text" placeholder="请输入内容"/>
+        <view class="name particulars-list">{{item.key}}<span wx-if="{{item.must == 1}}">*</span><span wx-elif="{{item.must == 0}}"></span></view>
+        <!--必填项-->
+        <view wx:if="{{item.must == 1}}">
+            <!--单行-->
+            <input wx-if="{{item.type == 'danh'}}" class="particulars-inp" type="text" placeholder="请输入内容-必填" bindinput="userNameInput"/>
+            <!--多行-->
+            <textarea wx-if="{{item.type == 'duoh'}}" class="particulars-text" type="text" placeholder="请输入内容-必填" bindinput="passWdInput"/>
+            <!--单选-->
+            <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}">
+                <label class="radio2" wx:for="{{danx}}" wx:for-item="idx">
+                    <view wx:for="{{idx}}">
+                        <radio  value="{{item.index}}" checked="{{checked}}"/>{{item}}
+                    </view>
+                </label>
+            </radio-group>
+            <!--多选-->
+            <checkbox-group bindchange="checkboxChange" wx-if="{{item.type == 'duox'}}">
+                <label class="radio2" wx:for="{{duox}}" wx:for-item="id">
+                    <view wx:for="{{id}}">
+                        <checkbox value="{{item.index}}" checked="{{checked2}}"/>{{item}}
+                    </view>
+                </label>
+            </checkbox-group>
+        </view>
+        <!--非必填项-->
+        <view wx:if="{{item.must == 0}}">
+            <!--单行-->
+            <input wx-if="{{item.type == 'danh'}}" class="particulars-inp" type="text" placeholder="请输入内容-非必填"/>
+            <!--多行-->
+            <textarea wx-if="{{item.type == 'duoh'}}" class="particulars-text" type="text" placeholder="请输入内容-非必填"/>
+            <!--单选-->
+            <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}">
+                <label class="radio2" wx:for="{{danx}}" wx:for-item="idx">
+                    <view wx:for="{{idx}}">
+                        <radio  value="{{item.index}}" checked="{{checked}}"/>{{item}}
+                    </view>
+                </label>
+            </radio-group>
+            <!--多选-->
+            <checkbox-group bindchange="checkboxChange" wx-if="{{item.type == 'duox'}}">
+                <label class="radio2" wx:for="{{duox}}" wx:for-item="id">
+                    <view wx:for="{{id}}">
+                        <checkbox value="{{item.index}}" checked="{{checked2}}"/>{{item}}
+                    </view>
+                </label>
+            </checkbox-group>
+        </view>
     </view>
     <!--支付方式title-->
     <view class="form-block-title">
@@ -83,6 +123,6 @@
     <!--底部按钮-->
     <view class="bottom-btn">
         <view class="btn-price">￥0.00</view>
-        <view class="btn">立即报名</view>
+        <view class="btn" bindtap="loginBtnClick">立即报名</view>
     </view>
 </view>

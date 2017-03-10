@@ -1,0 +1,29 @@
+<view class="page">
+    <view class="top">
+        <view class="top1">1.请尽快支付</view>
+        <view class="top2">您的订单已经生成，请在{{timeText}}秒内支付</view>
+    </view>
+    <!--订单详情-->
+    <view class="center">
+        <view class="center1">
+            <view class="center1-left">付款金额</view>
+            <view class="center1-right">￥{{price}}</view>
+        </view>
+        <view class="center2">
+            <view class="center2-list">
+                <view class="list-left">票种</view>
+                <view class="list-right">{{category}}</view>
+            </view>
+            <view class="center2-list">
+                <view class="list-left">票价</view>
+                <view class="list-right">￥{{price}}</view>
+            </view>
+            <view class="center2-list">
+                <view class="list-left">数量</view>
+                <view class="list-right">×{{math}}</view>
+            </view>
+        </view>
+    </view>
+    <!--立即支付-->
+    <view class="btn-pay" bindtap="payNow">立即购买</view>
+</view>

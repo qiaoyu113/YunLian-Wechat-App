@@ -7,7 +7,8 @@
     "pages/piao/piao",
     "pages/WeChat-login/WeChat-login",
     "pages/register/register",
-    "pages/apply/apply"
+    "pages/apply/apply",
+    "pages/waitapply/waitapply"
   ],
   "window":{
     "backgroundTextStyle":"light",
