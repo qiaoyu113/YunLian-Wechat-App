@@ -14,29 +14,38 @@
       <view class="time-left"><image src="../../images/time.png" style="width: 40rpx; height: 40rpx;"></image></view>
       <view class="time-right">
         <view class="time-right-1">{{logs.actStartTime}} 至 {{logs.actEndTime}}
-          <span>已结束</span>
+          <span wx:if="{{logs.actStauts == 0}}">未开始</span>
+          <span wx:if="{{logs.actStauts == 1}}">进行中</span>
+          <span wx:if="{{logs.actStauts == 2}}">已结束</span>
         </view>
         <view class="time-right-2">{{logs.signupStartTime}} 至 {{logs.signupEndTime}}
-          <span>报名截止</span>
+          <span wx:if="{{logs.actApplyStauts == 0}}">未开始报名</span>
+          <span wx:if="{{logs.actApplyStauts == 1}}">报名中</span>
+          <span wx:if="{{logs.actApplyStauts == 2}}">报名截止</span>
         </view>
       </view>
     </view>
     <!--活动地址-->
-    <view class="message-add">
+    <view class="message-add" bindtap="getlocation">
       <view class="add-left">
         <image src="../../images/add.png" style="width: 40rpx; height: 40rpx;"></image>
       </view>
-      <view class="add-right">
+      <view class="add-right" >
         {{logs.prov}}{{logs.city}}{{logs.activityAddress}}
       </view>
     </view>
     <!--报名人数-->
-    <view class="message-peo">
+    <view wx:if="{{logs.actApplyNum == 0}}">
+        
+    </view>
+    <view wx:else>
+      <view class="message-peo">
         <view class="peo-left">
-        <image src="../../images/peo.png" style="width: 40rpx; height: 40rpx;"></image>
-      </view>
-      <view class="peo-right">
-        {{logs.actApplyNum}}人已报名
+          <image src="../../images/peo.png" style="width: 40rpx; height: 40rpx;"></image>
+        </view>
+        <view class="peo-right" >
+          {{logs.actApplyNum}}人已报名
+        </view>
       </view>
     </view>
     <!--价格-->
@@ -64,6 +73,7 @@
 </view>
 <!--按钮-->
   <view class="btn">
-    <view class="btn2" bindtap="toast" wx:if="{{btn=='1'}}">我要报名</view>
-    <view class="btn1" wx:else="{{btn=='2'}}">报名已结束</view>
+    <view class="btn2" bindtap="toast" wx:if="{{logs.actStauts == 1}}">我要报名</view>
+    <view class="btn1" wx:if="{{logs.actStauts == 2}}">报名已结束</view>
+    <view class="btn2" bindtap="toast" wx:else="{{logs.actStauts == 0}}">我要报名</view>
   </view>

@@ -13,7 +13,7 @@
     height:100%;
 }
 .top-right{
-    width:480rpx;
+    width:470rpx;
     float:left;
     margin-left:10rpx;
 }

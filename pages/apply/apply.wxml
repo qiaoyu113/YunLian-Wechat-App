@@ -11,17 +11,19 @@
         </view>
     </view>
     <!--选择票种标题-->
-    <view class="top2">
-        <span class="top2-left"></span><span class="top2-center">选择票种</span><span class="top2-right"></span>
+    <view class="form-block-title">
+        <view class="title-left"></view>
+        <view class="title-center">选择票种</view>
+        <view class="title-right"></view>
     </view>
 
 
     <!--选择票种内容-->
     <radio-group class="radio-group" bindchange="radioChange">
-        <label class="radio top3" wx:for-items="{{tickets}}" id="{{item.totalNum}}" bindtap="totalNum" data-limitNum="{{item.limitNum}}">
+        <label class="radio top3" wx:for-items="{{tickets}}" id="{{item.totalNum}}" bindtap="totalNum" data-limitNum="{{item.limitNum}}" data-zong="{{price/100}}">
             <view class="top3-left">
                 <view class="top3-left-1">{{item.name}}</view>
-                <view class="top3-left-2">￥{{item.price}}.00</view>
+                <view class="top3-left-2">￥{{item.price/100}}</view>
             </view>
             <view class="top3-right">
                 <radio value="{{item.detail}}" checked="{{checked}}" />
@@ -58,9 +60,9 @@
         <!--必填项-->
         <view wx:if="{{item.must == 1}}">
             <!--单行-->
-            <input wx-if="{{item.type == 'danh'}}" class="particulars-inp" type="text" placeholder="请输入内容-必填" bindinput="userNameInput"/>
+            <input wx-if="{{item.type == 'danh'}}" id="inp" class="particulars-inp" type="text" placeholder="请输入内容-必填" bindinput="userNameInput"/>
             <!--多行-->
-            <textarea wx-if="{{item.type == 'duoh'}}" class="particulars-text" type="text" placeholder="请输入内容-必填" bindinput="passWdInput"/>
+            <textarea wx-if="{{item.type == 'duoh'}}" id="text" class="particulars-text" type="text" placeholder="请输入内容-必填" bindinput="passWdInput"/>
             <!--单选-->
             <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}">
                 <label class="radio2" wx:for="{{danx}}" wx:for-item="idx">
@@ -122,7 +124,7 @@
     </view>
     <!--底部按钮-->
     <view class="bottom-btn">
-        <view class="btn-price">￥0.00</view>
+        <view class="btn-price">￥{{zong*num}}</view>
         <view class="btn" bindtap="loginBtnClick">立即报名</view>
     </view>
 </view>

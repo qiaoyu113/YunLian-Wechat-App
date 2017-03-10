@@ -17,15 +17,15 @@ function toDate(number) {
 
 Page({
   data: {
-    // logs: {
-    //   img:'../../images/111.jpg',
-    //   tit:'云狮会数字营销论坛（第十三期）视频营销新时代哈哈哈哈哈哈哈',
-    //   time:'01/23/ 17:00',
-    //   time1:'01/23/ 17:00'
-    // },
     time:{},
     btn:1,
-    logs:{}
+    logs:{},
+    latitude: 0,//纬度 
+    longitude: 0,//经度 
+    speed: 0,//速度 
+    accuracy: 16,//位置精准度 
+    markers: [], 
+    covers: [], 
   },
   onLoad: function (options) {
     var $this = this;
@@ -77,6 +77,12 @@ Page({
         // complete
       }
     })
-  }
+  },
+
+  getlocation: function () { 
+    wx.navigateTo({
+      url:'../map/map'
+    })
+ } 
   
 })

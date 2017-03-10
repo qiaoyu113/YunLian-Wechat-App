@@ -8,7 +8,8 @@
     "pages/WeChat-login/WeChat-login",
     "pages/register/register",
     "pages/apply/apply",
-    "pages/waitapply/waitapply"
+    "pages/waitapply/waitapply",
+    "pages/map/map"
   ],
   "window":{
     "backgroundTextStyle":"light",

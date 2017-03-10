@@ -9,6 +9,11 @@ var limitNum = ''
 var staffSign = ''
 var danx = ''
 var duox = ''
+var zong = ''
+var price = ''
+var passId = ''
+var userId =''
+
 
 //时间戳
 function toDate(number) {
@@ -42,16 +47,25 @@ Page({
         userName: '',
         userN:'',
         passWd: '',
-        passW:''    
+        passW:'',
+        zong:zong,
+        price:price,
+        inputContent: {},
+        userId:'',
+        passId:''
     },
     userNameInput:function(e){
+        console.log(e)
         this.setData({
-            userN:e.detail.value
+            userN:e.detail.value,
+            passId:e.currentTarget.id
         })
     },
     passWdInput:function(e){
+        console.log(e)
         this.setData({
-            passW:e.detail.value
+            passW:e.detail.value,
+            passId:e.currentTarget.id
         })
     },
     //确认订单验证
@@ -73,11 +87,14 @@ Page({
     },
     //单选取值
     totalNum:function(e){
+        console.log(e)
         totalNum = e.currentTarget.id
         limitNum = e.currentTarget.dataset.limitnum
+        zong = e.currentTarget.dataset.zong
         this.setData({
             totalNum:totalNum,
-            limitNum:limitNum
+            limitNum:limitNum,
+            zong:zong
         })
     },
     //单选
@@ -119,6 +136,8 @@ Page({
             for(var i = 0;i<length;i++){
                 kind = res.data.activity.tickets[i].detail
                 limitNum = res.data.activity.tickets[i].limitNum
+                price = res.data.activity.tickets[i].price
+                zong = price/100
                 tickets.push(res.data.activity.tickets[i]);
             }
             that.setData({
@@ -126,10 +145,12 @@ Page({
                 tickets:tickets,
                 kind:kind,
                 totalNum:totalNum,
+                price:price,
                 limitNum:limitNum,
                 staffSign:staffSign,
                 danx:danx,
                 duox:duox,
+                zong:zong
             });
         }, null, null)
     },
