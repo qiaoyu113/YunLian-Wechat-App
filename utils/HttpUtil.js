@@ -27,29 +27,32 @@ function _get(url, success, fail, complete) {
 }
 
 /**
- * url 请求地址
- * success 成功的回调
- * fail 失败的回调
- */
-function _post_from(url, data, success, fail, complete) {
+* url 请求地址
+* success 成功的回调
+* fail 失败的回调
+*/
+function _post_form(targetUrl, targetData, cbSuccess, cbFail, cbComplete) {
     console.log("----_post--start-------");
+    targetData.sessionId = getSessionId();
     wx.request({
-        url: url,
+        url: app.globalData.domainUrl + targetUrl + "?format=json",
         header: {
-            'content-type': 'application/x-www-form-urlencoded',
+            'content-type': 'application/x-www-form-urlencoded'
         },
         method: 'POST',
-        data: { data: data },
+        data: targetData,
         success: function (res) {
-            success(res);
+            cbSuccess(res);
         },
         fail: function (res) {
-            fail(res);
-        }, complete: function (res) {
-            complete(res);
+            cbFail(res);
+        },
+        complete: function (res) {
+            cbComplete(res);
         }
     });
-    console.log("----end-----_get----");
+
+    console.log("----end----_post-----");
 }
 
 /**
@@ -57,24 +60,24 @@ function _post_from(url, data, success, fail, complete) {
 * success 成功的回调
 * fail 失败的回调
 */
-function _post_json(url, data, success, fail, complete) {
+function _post_json(targetUrl, targetData, cbSuccess, cbFail, cbComplete) {
     console.log("----_post--start-------");
     wx.request({
-        url: app.globalData.domainUrl + url + "?format=json",
+        url: app.globalData.domainUrl + targetUrl + "?format=json",
         header: {
-            'content-type': 'application/json',
+            'content-type': 'application/json;charset=utf-8',
             'sessionId': getSessionId()
         },
         method: 'POST',
-        data: data,
+        data: targetData,
         success: function (res) {
-            success(res);
+            cbSuccess(res);
         },
         fail: function (res) {
-            fail(res);
+            cbFail(res);
         },
         complete: function (res) {
-            complete(res);
+            cbComplete(res);
         }
     });
 
@@ -101,6 +104,6 @@ function getSessionId() {
 
 module.exports = {
     _get: _get,
-    _post: _post_from,
+    _post: _post_form,
     _post_json: _post_json
 }

@@ -1,4 +1,7 @@
-var app = getApp()
+var app = getApp();
+var http = require('../../utils/HttpUtil.js');
+var login = require('../../utils/login.js');
+
 var urlapp = app.globalData.contextUrl;
 var page = 0;
 var pages = 1;
@@ -9,9 +12,9 @@ var nomore = false;
 var zhezhao1 = 2;
 var subjectUrl = '';
 var checked = 1;//监听是否点击过活动事件
-var map = ['所有地点','北京', '上海', '广州', '深圳', '杭州', '成都', '南京','苏州','武汉','天津','重庆','西安','厦门','宁波','郑州','青岛'];
+var map = ['所有地点', '北京', '上海', '广州', '深圳', '杭州', '成都', '南京', '苏州', '武汉', '天津', '重庆', '西安', '厦门', '宁波', '郑州', '青岛'];
 var time = ['不限', '今天', '明天', '本周', '本周末', '本月']
-var timevalue = ['all','today','tomorrow','week','weekend','month']
+var timevalue = ['all', 'today', 'tomorrow', 'week', 'weekend', 'month']
 var Newurl = '';
 var timeurl = '';
 var mapindex = ''
@@ -66,12 +69,12 @@ var loadMore = function (that) {
           json.push(res.data.pages.datas[i]);
         }
 
-        if(zong==1||length==0){
+        if (zong == 1 || length == 0) {
           that.setData({
             nomore: true,
             more: false,
           });
-        }else{
+        } else {
           that.setData({
             nomore: false,
             more: true,
@@ -101,203 +104,203 @@ var loadMore = function (that) {
 }
 
 var checkMore = function (that) {
-      if(add==true){
-        zhuti = [];
-        json = [];
-        thispages2 = pages2;
-        subjectUrl2 = subjectUrl
-      }else{
-        zhuti = [];
-        subjectUrl2 = subjectUrl2
+  if (add == true) {
+    zhuti = [];
+    json = [];
+    thispages2 = pages2;
+    subjectUrl2 = subjectUrl
+  } else {
+    zhuti = [];
+    subjectUrl2 = subjectUrl2
+  }
+  wx.request({
+    url: subjectUrl2,
+    success: function (res) {
+      // console.log(res.data.pages.datas[i]) 
+      // console.log(url);
+      var totalCount = res.data.pages.datas.length
+      var totalPage = res.data.pages.totalPage
+      var zongpage = thispages2
+      var zleng = res.data.aList
+      for (var i = 0; i < zleng.length; i++) {
+        zhuti.push(zleng[i])
       }
-      wx.request({
-        url: subjectUrl2,
-        success: function (res) {
-          // console.log(res.data.pages.datas[i]) 
-          // console.log(url);
-          var totalCount = res.data.pages.datas.length
-          var totalPage = res.data.pages.totalPage
-          var zongpage = thispages2
-          var zleng = res.data.aList
-          for (var i = 0; i < zleng.length; i++) {
-            zhuti.push(zleng[i])
-          }
-          // console.log(zhuti)
-          if (zongpage <= totalPage) {
-            for (var i = 0; i < totalCount; i++) {
-              res.data.pages.datas[i].publishTime = toDate(res.data.pages.datas[i].publishTime)
-              json.push(res.data.pages.datas[i]);
-            }
-            if(totalPage==1||totalCount==0){
-              that.setData({
-                nomore: true,
-                more: false,
-              });
-            }else{
-              that.setData({
-                nomore: false,
-                more: true,
-              });
-            }
-            thispages2++;
-            add = false;
-          } else {
-            that.setData({
-              nomore: true,
-              more: false,
-            });
-
-          }
-
+      // console.log(zhuti)
+      if (zongpage <= totalPage) {
+        for (var i = 0; i < totalCount; i++) {
+          res.data.pages.datas[i].publishTime = toDate(res.data.pages.datas[i].publishTime)
+          json.push(res.data.pages.datas[i]);
+        }
+        if (totalPage == 1 || totalCount == 0) {
           that.setData({
-            json: json,
-            zhuti: zhuti,
-            hidden: true
+            nomore: true,
+            more: false,
+          });
+        } else {
+          that.setData({
+            nomore: false,
+            more: true,
           });
         }
-      })
+        thispages2++;
+        add = false;
+      } else {
+        that.setData({
+          nomore: true,
+          more: false,
+        });
+
+      }
+
+      that.setData({
+        json: json,
+        zhuti: zhuti,
+        hidden: true
+      });
+    }
+  })
 }
 
 var mapMore = function (that) {
-      if(mapindex==0){
-         Newurl = urlapp
-         if(add==true){
-          zhuti = [];
-          json = [];
-          thispages3 = pages3;
-        }else{
-          zhuti = [];
-        }
-      }else{
-        if(add==true){
-          zhuti = [];
-          json = [];
-          thispages3 = pages3;
-        }else{
-          zhuti = [];
-        }
-        Newurl = urlapp+'&address=' + map[mapindex]+'&pageNo='+thispages3
+  if (mapindex == 0) {
+    Newurl = urlapp
+    if (add == true) {
+      zhuti = [];
+      json = [];
+      thispages3 = pages3;
+    } else {
+      zhuti = [];
+    }
+  } else {
+    if (add == true) {
+      zhuti = [];
+      json = [];
+      thispages3 = pages3;
+    } else {
+      zhuti = [];
+    }
+    Newurl = urlapp + '&address=' + map[mapindex] + '&pageNo=' + thispages3
+  }
+  Newurl = encodeURI(Newurl)
+  console.log(Newurl)
+  console.log('thispages3' + thispages3)
+  wx.request({
+    url: Newurl,
+    success: function (res) {
+      // console.log(res.data.pages.datas[i]) 
+      // console.log(url);
+      var totalCount = res.data.pages.datas.length
+      var totalPage = res.data.pages.totalPage
+      var zongpage = thispages3
+      var zleng = map
+      for (var i = 0; i < zleng.length; i++) {
+        zhuti.push(zleng[i])
       }
-      Newurl = encodeURI(Newurl)
-      console.log(Newurl)
-      console.log('thispages3'+thispages3)
-      wx.request({
-        url: Newurl,
-        success: function (res) {
-          // console.log(res.data.pages.datas[i]) 
-          // console.log(url);
-          var totalCount = res.data.pages.datas.length
-          var totalPage = res.data.pages.totalPage
-          var zongpage = thispages3
-          var zleng = map
-          for (var i = 0; i < zleng.length; i++) {
-            zhuti.push(zleng[i])
-          }
-          // console.log(zhuti)
-          if (zongpage <= totalPage) {
-            for (var i = 0; i < totalCount; i++) {
-              res.data.pages.datas[i].publishTime = toDate(res.data.pages.datas[i].publishTime)
-              json.push(res.data.pages.datas[i]);
-            }
-            if(totalPage==1||totalCount==0){
-              that.setData({
-                nomore: true,
-                more: false,
-              });
-            }else{
-              that.setData({
-                nomore: false,
-                more: true,
-              });
-            }
-            thispages3++;
-            add = false
-          } else {
-            that.setData({
-              nomore: true,
-              more: false,
-            });
-
-          }
-
+      // console.log(zhuti)
+      if (zongpage <= totalPage) {
+        for (var i = 0; i < totalCount; i++) {
+          res.data.pages.datas[i].publishTime = toDate(res.data.pages.datas[i].publishTime)
+          json.push(res.data.pages.datas[i]);
+        }
+        if (totalPage == 1 || totalCount == 0) {
           that.setData({
-            json: json,
-            zhuti: zhuti,
-            hidden: true
+            nomore: true,
+            more: false,
+          });
+        } else {
+          that.setData({
+            nomore: false,
+            more: true,
           });
         }
-      })
+        thispages3++;
+        add = false
+      } else {
+        that.setData({
+          nomore: true,
+          more: false,
+        });
+
+      }
+
+      that.setData({
+        json: json,
+        zhuti: zhuti,
+        hidden: true
+      });
+    }
+  })
 }
 
 var timeMore = function (that) {
-      if(timeindex==0){
-         timeurl = urlapp
-         if(add==true){
-          zhuti = [];
-          json = [];
-          thispages3 = pages3;
-        }else{
-          zhuti = [];
-        }
-      }else{
-        if(add==true){
-          zhuti = [];
-          json = [];
-          thispages3 = pages3;
-        }else{
-          zhuti = [];
-        }
-        timeurl = urlapp+'&time=' + timevalue[timeindex]+'&pageNo='+thispages3
+  if (timeindex == 0) {
+    timeurl = urlapp
+    if (add == true) {
+      zhuti = [];
+      json = [];
+      thispages3 = pages3;
+    } else {
+      zhuti = [];
+    }
+  } else {
+    if (add == true) {
+      zhuti = [];
+      json = [];
+      thispages3 = pages3;
+    } else {
+      zhuti = [];
+    }
+    timeurl = urlapp + '&time=' + timevalue[timeindex] + '&pageNo=' + thispages3
+  }
+  // timeurl = encodeURI(timeurl)
+  console.log(timeurl)
+  console.log('thispages3' + thispages3)
+  wx.request({
+    url: timeurl,
+    success: function (res) {
+      // console.log(res.data.pages.datas[i]) 
+      // console.log(url);
+      var totalCount = res.data.pages.datas.length
+      var totalPage = res.data.pages.totalPage
+      var zongpage = thispages3
+      var zleng = time
+      for (var i = 0; i < zleng.length; i++) {
+        zhuti.push(zleng[i])
       }
-      // timeurl = encodeURI(timeurl)
-      console.log(timeurl)
-      console.log('thispages3'+thispages3)
-      wx.request({
-        url: timeurl,
-        success: function (res) {
-          // console.log(res.data.pages.datas[i]) 
-          // console.log(url);
-          var totalCount = res.data.pages.datas.length
-          var totalPage = res.data.pages.totalPage
-          var zongpage = thispages3
-          var zleng = time
-          for (var i = 0; i < zleng.length; i++) {
-            zhuti.push(zleng[i])
-          }
-          // console.log(zhuti)
-          if (zongpage <= totalPage) {
-            for (var i = 0; i < totalCount; i++) {
-              res.data.pages.datas[i].publishTime = toDate(res.data.pages.datas[i].publishTime)
-              json.push(res.data.pages.datas[i]);
-            }
-            if(totalPage==1||totalCount==0){
-              that.setData({
-                nomore: true,
-                more: false,
-              });
-            }else{
-              that.setData({
-                nomore: false,
-                more: true,
-              });
-            }
-            thispages3++;
-            add = false
-          } else {
-            that.setData({
-              nomore: true,
-              more: false,
-            });
-
-          }
-
+      // console.log(zhuti)
+      if (zongpage <= totalPage) {
+        for (var i = 0; i < totalCount; i++) {
+          res.data.pages.datas[i].publishTime = toDate(res.data.pages.datas[i].publishTime)
+          json.push(res.data.pages.datas[i]);
+        }
+        if (totalPage == 1 || totalCount == 0) {
           that.setData({
-            json: json,
-            zhuti: zhuti,
-            hidden: true
+            nomore: true,
+            more: false,
+          });
+        } else {
+          that.setData({
+            nomore: false,
+            more: true,
           });
         }
-      })
+        thispages3++;
+        add = false
+      } else {
+        that.setData({
+          nomore: true,
+          more: false,
+        });
+
+      }
+
+      that.setData({
+        json: json,
+        zhuti: zhuti,
+        hidden: true
+      });
+    }
+  })
 }
 
 Page({
@@ -330,38 +333,32 @@ Page({
 
   //AJAX加载
   onLoad: function onLoad() {
+    //1.进入后先进行登录
+    login._login();//执行登录
+
+    // wx.checkSession({
+    //   success: function () {
+    //     console.log("嘿嘿嘿")
+    //     //session 未过期，并且在本生命周期一直有效
+    //   },
+    //   fail: function () {
+    //     //登录态过期
+    //     login.login();//执行登录
+    //   }
+    // })
+
     var $this = this;
     $this.setData({
       hasRefesh: true,
       more: true,
     });
-    wx.getSystemInfo({
+    wx.getSystemInfo({//获取高度
       success: function (res) {
         $this.setData({
           scrollHeight: res.windowHeight
         });
       }
     });
-    // wx.setStorage({
-    //     key: 'JSESSIONID',
-    //     success: function success(res) {
-    //         wx.request({
-    //             url: 'https://dutao.s1.natapp.cc/open/acts.html',
-    //             success: function success(res) {
-    //                     $this.setData({
-    //                         hiddenLoading: true,
-    //                         json: res.data.obj.datas,
-    //                         hidden: true,
-    //                         hasRefesh:false,
-    //                     });
-    //             }
-    //         });
-    //     },
-    //     fail: function fail() {
-    //         wx.redirectTo({ url: '../index/index' });
-    //     }
-    // })
-
     loadMore($this);
   },
 
@@ -448,7 +445,7 @@ Page({
     that.setData({
       type: 2,
       zhezhao: 2,
-      scrollTop:0
+      scrollTop: 0
     })
     checkMore(that)
   },
@@ -461,13 +458,13 @@ Page({
     that.setData({
       shijian: 2,
       zhezhao: 2,
-      scrollTop:0
+      scrollTop: 0
     })
     var index = parseInt(e.currentTarget.dataset.index);
     mapindex = index
     console.log(mapindex)
     mapMore(that)
-    
+
   },
 
   //点击时间范围选项
@@ -478,15 +475,15 @@ Page({
     that.setData({
       fanwei: 2,
       zhezhao: 2,
-      scrollTop:0
+      scrollTop: 0
     })
     var index = parseInt(e.currentTarget.dataset.index);
     timeindex = index
-    console.log('哈哈'+timeindex);
+    console.log('哈哈' + timeindex);
     timeMore(that)
   },
-  
-  
+
+
   //点击遮罩层
   nozhezhao: function (e) {
     var that = this;
@@ -499,9 +496,9 @@ Page({
   },
 
   //点击所有主题
-  alltheme:function(){
+  alltheme: function () {
     this.setData({
-      json:[],
+      json: [],
       fanwei: 2,
       zhezhao: 2,
       type: 2,
@@ -511,7 +508,7 @@ Page({
     pages = 1
     loadMore(this);
     this.setData({
-      scrollTop:0
+      scrollTop: 0
     })
   },
 
@@ -519,26 +516,26 @@ Page({
   //页面滑动到底部
   bindDownLoad: function () {
     subjectUrl2 = ''
-    subjectUrl2 = subjectUrl + '&pageNo='+thispages2
+    subjectUrl2 = subjectUrl + '&pageNo=' + thispages2
     var that = this;
-    if(checked==2){
+    if (checked == 2) {
       checkMore(that)
-    }else if(checked==1){
+    } else if (checked == 1) {
       loadMore(that);
-    }else if(checked==3){
+    } else if (checked == 3) {
       mapMore(that)
-    }else{
+    } else {
       timeMore(that)
       console.log('shanchuwo')
     }
   },
 
   scroll: function (event) {
-  //该方法绑定了页面滚动时的事件，我这里记录了当前的position.y的值,为了请求数据之后把页面定位到这来。
+    //该方法绑定了页面滚动时的事件，我这里记录了当前的position.y的值,为了请求数据之后把页面定位到这来。
     this.setData({
       scrollTop: event.detail.scrollTop
     });
   },
-   
+
 
 })

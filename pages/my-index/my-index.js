@@ -114,13 +114,17 @@ Page({
   },
   onLoad: function () {
     var page = this;
+
+    page.setData({
+      avatarUrl: app.globalData.userInfo.avatarUrl,
+      nicname: app.globalData.userInfo.nickName
+    })
     //调用登录接口
     wx.login({
       success: function (loginRes) {
         if (loginRes.code) {
-          http._post_json('open/wx/getSession',{code: loginRes.code},null,null);
           wx.request({//code换取openid+session_key
-            url: 'https://dutao.s1.natapp.cc/open/wx/getSession?format=json',
+            url: 'https://dutao.s1.natapp.cc/open/getSession?format=json',
             data: {
               code: loginRes.code
             },
@@ -147,7 +151,7 @@ Page({
                       nicname: result.userInfo.nickName
                     })
                     wx.request({
-                      url: 'https://dutao.s1.natapp.cc/open/wx/decodeUserInfo?format=json',
+                      url: 'https://dutao.s1.natapp.cc/open/decodeUserInfo?format=json',
                       data: {
                         sessionId: sessionRes.data.string,
                         encryptedData: result.encryptedData,
@@ -156,7 +160,7 @@ Page({
                       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
                       // header: {}, // 设置请求的 header
                       success: function (userInfoRes) {
-                        console(userInfoRes);
+                        console.log(userInfoRes);
                       },
                       fail: function () {
                         // fail
