@@ -30,6 +30,7 @@ function login() {
                         success: function (result) {
                             app.globalData.userInfo = result.userInfo;//用户信息放到gloableData中
                             http._post('open/decodeUserInfo', { 'encryptedData': result.encryptedData, 'iv': result.iv }, function (userInfoRes) {
+                                app.globalData.openId = userInfoRes.data.openId;
                                 console.log(userInfoRes);
                             }, function (fail) { }, function (complete) { })
                         }, fail: function (fail) {

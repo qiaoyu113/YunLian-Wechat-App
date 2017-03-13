@@ -5,8 +5,6 @@ var app = getApp()
  * fail 失败的回调
  */
 function _get(url, success, fail, complete) {
-
-    console.log("------start---_get----");
     wx.request({
         url: app.globalData.domainUrl + url + "?format=json",
         header: {
@@ -22,8 +20,6 @@ function _get(url, success, fail, complete) {
             complete(res);
         }
     });
-
-    console.log("----end-----_get----");
 }
 
 /**
@@ -32,7 +28,9 @@ function _get(url, success, fail, complete) {
 * fail 失败的回调
 */
 function _post_form(targetUrl, targetData, cbSuccess, cbFail, cbComplete) {
-    console.log("----_post--start-------");
+    if(!targetData){
+        targetData = {};
+    }
     targetData.sessionId = getSessionId();
     wx.request({
         url: app.globalData.domainUrl + targetUrl + "?format=json",
@@ -51,8 +49,6 @@ function _post_form(targetUrl, targetData, cbSuccess, cbFail, cbComplete) {
             cbComplete(res);
         }
     });
-
-    console.log("----end----_post-----");
 }
 
 /**
@@ -61,7 +57,6 @@ function _post_form(targetUrl, targetData, cbSuccess, cbFail, cbComplete) {
 * fail 失败的回调
 */
 function _post_json(targetUrl, targetData, cbSuccess, cbFail, cbComplete) {
-    console.log("----_post--start-------");
     wx.request({
         url: app.globalData.domainUrl + targetUrl + "?format=json",
         header: {
@@ -80,8 +75,6 @@ function _post_json(targetUrl, targetData, cbSuccess, cbFail, cbComplete) {
             cbComplete(res);
         }
     });
-
-    console.log("----end----_post-----");
 }
 
 /**

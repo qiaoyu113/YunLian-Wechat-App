@@ -28,6 +28,7 @@ App({
     register:false, //没有登录登录
     regyes:true,
     userInfo:{},//缓存用户信息
+    openId:'',
     domainUrl:'https://dutao.s1.natapp.cc/',//服务器地址信息
     contextUrl:'https://dutao.s1.natapp.cc/activity.html?format=json',
     resourceUrl:'http://test.resource.vjuzhen.com/',

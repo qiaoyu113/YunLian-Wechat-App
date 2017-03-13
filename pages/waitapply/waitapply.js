@@ -13,7 +13,7 @@ Page({
         math:1,
         category:'票种2'
     },
-    onLoad: function () {  
+    onLoad: function (options) {  
         this.move()  
         //计时开始 后面的1000是毫秒 每1000毫秒跳一次  
         timer=setInterval(this.move,1000);  
