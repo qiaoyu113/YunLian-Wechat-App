@@ -331,21 +331,10 @@ Page({
     time: time,
   },
 
-  //AJAX加载
+
   onLoad: function onLoad() {
     //1.进入后先进行登录
     login._login();//执行登录
-
-    // wx.checkSession({
-    //   success: function () {
-    //     console.log("嘿嘿嘿")
-    //     //session 未过期，并且在本生命周期一直有效
-    //   },
-    //   fail: function () {
-    //     //登录态过期
-    //     login.login();//执行登录
-    //   }
-    // })
 
     var $this = this;
     $this.setData({
