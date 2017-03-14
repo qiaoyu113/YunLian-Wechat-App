@@ -182,13 +182,9 @@ var mapMore = function (that) {
     Newurl = urlapp + '&address=' + map[mapindex] + '&pageNo=' + thispages3
   }
   Newurl = encodeURI(Newurl)
-  console.log(Newurl)
-  console.log('thispages3' + thispages3)
   wx.request({
     url: Newurl,
     success: function (res) {
-      // console.log(res.data.pages.datas[i]) 
-      // console.log(url);
       var totalCount = res.data.pages.datas.length
       var totalPage = res.data.pages.totalPage
       var zongpage = thispages3
@@ -196,7 +192,6 @@ var mapMore = function (that) {
       for (var i = 0; i < zleng.length; i++) {
         zhuti.push(zleng[i])
       }
-      // console.log(zhuti)
       if (zongpage <= totalPage) {
         for (var i = 0; i < totalCount; i++) {
           res.data.pages.datas[i].publishTime = toDate(res.data.pages.datas[i].publishTime)
@@ -252,14 +247,9 @@ var timeMore = function (that) {
     }
     timeurl = urlapp + '&time=' + timevalue[timeindex] + '&pageNo=' + thispages3
   }
-  // timeurl = encodeURI(timeurl)
-  console.log(timeurl)
-  console.log('thispages3' + thispages3)
   wx.request({
     url: timeurl,
     success: function (res) {
-      // console.log(res.data.pages.datas[i]) 
-      // console.log(url);
       var totalCount = res.data.pages.datas.length
       var totalPage = res.data.pages.totalPage
       var zongpage = thispages3
@@ -267,7 +257,6 @@ var timeMore = function (that) {
       for (var i = 0; i < zleng.length; i++) {
         zhuti.push(zleng[i])
       }
-      // console.log(zhuti)
       if (zongpage <= totalPage) {
         for (var i = 0; i < totalCount; i++) {
           res.data.pages.datas[i].publishTime = toDate(res.data.pages.datas[i].publishTime)
@@ -426,11 +415,9 @@ Page({
     thispages2 = 1
     add = true;
     checked = 2;
-    console.log(checked)
     var that = this;
     var index = e.currentTarget.dataset.id;
     subjectUrl = urlapp + '&subject=' + index;
-    console.log(subjectUrl)
     that.setData({
       type: 2,
       zhezhao: 2,
@@ -451,7 +438,6 @@ Page({
     })
     var index = parseInt(e.currentTarget.dataset.index);
     mapindex = index
-    console.log(mapindex)
     mapMore(that)
 
   },
@@ -468,7 +454,6 @@ Page({
     })
     var index = parseInt(e.currentTarget.dataset.index);
     timeindex = index
-    console.log('哈哈' + timeindex);
     timeMore(that)
   },
 
@@ -515,7 +500,6 @@ Page({
       mapMore(that)
     } else {
       timeMore(that)
-      console.log('shanchuwo')
     }
   },
 

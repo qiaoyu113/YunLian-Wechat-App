@@ -21,7 +21,7 @@
 
   <!--选择票种内容-->
   <radio-group class="radio-group" bindchange="radioChange">
-    <label class="radio top3" wx:for-items="{{tickets}}" id="{{item.totalNum}}" bindtap="totalNum" data-limitNum="{{item.limitNum}}" data-zong="{{price/100}}" data-ticketId="{{item.id}}">
+    <label class="radio top3" wx:for-items="{{tickets}}" wx:key='ticket' id="{{item.totalNum}}" bindtap="totalNum" data-limitNum="{{item.limitNum}}" data-zong="{{price/100}}" data-ticketId="{{item.id}}">
       <view class="top3-left">
         <view class="top3-left-1">{{item.name}}</view>
         <view class="top3-left-2">￥{{item.price/100}}</view>
@@ -60,7 +60,7 @@
   <form bindsubmit="formSubmit">
 
     <!--报名信息详情-->
-    <view class="particulars" wx:for="{{staffSign}}">
+    <view class="particulars" wx:for="{{staffSign}}" wx:key='staff'>
 
       <!--姓名-->
       <view class="name particulars-list">{{item.key}}<span wx-if="{{item.must == 1}}">*</span>  <span wx-elif="{{item.must == 0}}"></span>  </view>
@@ -78,7 +78,7 @@
         <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}" name="{{item.key}}">
           <label class="radio2" wx:for="{{danx}}" wx:for-item="idx">
             <view wx:for="{{idx}}">
-              <radio value="{{item}}" checked="{{checked}}"/>{{item}}
+              <radio value="{{item}}" checked="{{checked}}" />{{item}}
             </view>
           </label>
         </radio-group>
@@ -87,7 +87,7 @@
         <checkbox-group bindchange="checkboxChange" wx-if="{{item.type == 'duox'}}" name="{{item.key}}">
           <label class="radio2" wx:for="{{duox}}" wx:for-item="id">
             <view wx:for="{{id}}">
-              <checkbox value="{{item}}" checked="{{checked2}}"/>{{item}}
+              <checkbox value="{{item}}" checked="{{checked2}}" />{{item}}
             </view>
           </label>
         </checkbox-group>
@@ -97,10 +97,10 @@
       <view wx:if="{{item.must == 0}}">
 
         <!--单行-->
-        <input wx-if="{{item.type == 'danh'}}" class="particulars-inp" type="text" placeholder="请输入内容-非必填" name="{{item.key}}"/>
+        <input wx-if="{{item.type == 'danh'}}" class="particulars-inp" type="text" placeholder="请输入内容-非必填" name="{{item.key}}" />
 
         <!--多行-->
-        <textarea wx-if="{{item.type == 'duoh'}}" class="particulars-text" type="text" placeholder="请输入内容-非必填" name="{{item.key}}"/>
+        <textarea wx-if="{{item.type == 'duoh'}}" class="particulars-text" type="text" placeholder="请输入内容-非必填" name="{{item.key}}" />
 
         <!--单选-->
         <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}" name="{{item.key}}">

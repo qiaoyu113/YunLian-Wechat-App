@@ -7,23 +7,23 @@
     <view class="center">
         <view class="center1">
             <view class="center1-left">付款金额</view>
-            <view class="center1-right">￥{{price}}</view>
+            <view class="center1-right">￥{{order.ticketNum*order.ticketPrice/100}}</view>
         </view>
         <view class="center2">
             <view class="center2-list">
                 <view class="list-left">票种</view>
-                <view class="list-right">{{category}}</view>
+                <view class="list-right">{{order.ticketName}}</view>
             </view>
             <view class="center2-list">
                 <view class="list-left">票价</view>
-                <view class="list-right">￥{{price}}</view>
+                <view class="list-right">￥{{order.ticketPrice/100}}</view>
             </view>
             <view class="center2-list">
                 <view class="list-left">数量</view>
-                <view class="list-right">×{{math}}</view>
+                <view class="list-right">×{{order.ticketNum}}</view>
             </view>
         </view>
     </view>
     <!--立即支付-->
-    <view class="btn-pay" bindtap="payNow">立即购买</view>
+    <view class="btn-pay" bindtap="payNow">立即支付</view>
 </view>

@@ -60,14 +60,12 @@ Page({
         ticketId: ''
     },
     userNameInput: function (e) {
-        console.log(e)
         this.setData({
             userN: e.detail.value,
             passId: e.currentTarget.id
         })
     },
     passWdInput: function (e) {
-        console.log(e)
         this.setData({
             passW: e.detail.value,
             passId: e.currentTarget.id
@@ -75,7 +73,6 @@ Page({
     },
     //确认订单验证
     formSubmit: function (e) {
-        console.log(orderDetails);
         var infos = e.detail.value;
         infos.name = infos.姓名;
         infos.phone = infos.手机;
@@ -87,11 +84,19 @@ Page({
 
 
         http._post("open/wx/apply", { 'actId': actId, 'infos': JSON.stringify(infos), 'orderDetail': JSON.stringify(orderDetails) }, function (successRes) {
-
-            wx.navigateTo({
-                url: '../waitapply/waitapply?payparam='+successRes.data.wx_jsapi_pay
-            })
-            console.log(successRes);
+            if (successRes.data.success) {
+                wx.setStorageSync('payparam', successRes.data.wx_jsapi_pay);
+                wx.setStorageSync('order', successRes.data.order);
+                wx.navigateTo({
+                    url: '../waitapply/waitapply'
+                })
+            } else {
+                wx.showToast({
+                    title: '下单出错了，尝试重新下单',
+                    icon: 'loading',
+                    duration: 2000
+                });
+            }
         }, function (failRes) { }, function (completeRes) { });
         // if (this.data.userN.length == 0 && this.data.passW.length == 0) {
         //     wx.showToast({
