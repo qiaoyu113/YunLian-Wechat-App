@@ -57,7 +57,9 @@ Page({
         inputContent: {},
         userId: '',
         passId: '',
-        ticketId: ''
+        ticketId: '',
+        name: '',
+        phone: ''
     },
     userNameInput: function (e) {
         this.setData({
@@ -183,7 +185,9 @@ Page({
                 danx: danx,
                 duox: duox,
                 zong: zong,
-                ticketId: ticketId
+                ticketId: ticketId,
+                name: app.globalData.userInfo.name,
+                phone: app.globalData.userInfo.phone
             });
         }, function (res) { }, function (res) { })
     },

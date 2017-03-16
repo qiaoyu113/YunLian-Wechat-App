@@ -1,23 +1,33 @@
 var app = getApp();
 var http = require("HttpUtil.js");
 //封装登录接口
-function login() {
+function login(page, url) {
     wx.checkSession({
         success: function () {
             //session 未过期，并且在本生命周期一直有效
             console.log('没过期');
             if (!wx.getStorageSync('3rdSessionId')) {
                 get3rdSession();
-                getUserInfo();
+                getUserInfo(page, url);
             } else if (!wx.getStorageSync('allowUserInfo')) {
-                getUserInfo();
+                getUserInfo(page, url);
+            } else if (wx.getStorageSync('bindPhone') != '1') {
+                wx.navigateTo({
+                    url: '../register/register?register=true'
+                })
+            } else {
+                if (page != null) {
+                    page.setData({
+                        userInfo: app.globalData.userInfo
+                    })
+                }
             }
             console.log(wx.getStorageSync('3rdSessionId'));
         },
         fail: function () {
             //登录态过期
             get3rdSession();
-            getUserInfo();
+            getUserInfo(page, url);
         }
     })
 
@@ -57,27 +67,43 @@ function get3rdSession() {
 }
 
 //获取用户信息
-function getUserInfo() {
+function getUserInfo(page, url) {
     wx.getUserInfo({//4.获取用户信息
         success: function (result) {
             wx.setStorageSync('allowUserInfo', '1');//允许获取用户信息
             app.globalData.userInfo = result.userInfo;//用户信息放到gloableData中
-
+            if (page != null) {
+                page.setData({
+                    userInfo: app.globalData.userInfo
+                })
+            }
             http._post('open/decodeUserInfo', { 'encryptedData': result.encryptedData, 'iv': result.iv }, function (userInfoRes) {
                 app.globalData.openId = userInfoRes.data.result.obj.openId;
                 var bindPhone = userInfoRes.data.result.obj.bindPhone;
                 if (!bindPhone) {
-                    wx.setStorageSync('bindPhone', false);//标识下没有绑定手机号
+                    wx.setStorageSync('bindPhone', '0');//标识下没有绑定手机号
                     wx.showToast({
                         title: 'BindPhone',
                         icon: 'loading',
                         duration: 2000
+                    });
+                    wx.navigateTo({
+                        url: '../register/register?register=true'
                     })
+                } else {
+                    wx.setStorageSync('bindPhone', '1');//绑定手机号
+                    app.globalData.userInfo.name = userInfoRes.data.result.obj.name;
+                    app.globalData.userInfo.phone = userInfoRes.data.result.obj.phone;
+                    if (url != null) {
+                        wx.navigateTo({
+                            url: url
+                        })
+                    }
                 }
             }, function (fail) { }, function (complete) { })
         }, fail: function (fail) {
             wx.setStorageSync('allowUserInfo', '2');//拒绝获取用户信息
-            
+
             console.log("没有允许获取用户信息");
         }
     })

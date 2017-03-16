@@ -1,7 +1,6 @@
 var http = require('../../utils/HttpUtil.js');
 var login = require('../../utils/login.js');
 var app = getApp()
-var vlu = app.globalData.register
 var vluyes = app.globalData.regyes
 
 
@@ -106,13 +105,10 @@ Page({
     })
   },
   onLoad: function () {
-    //1.进入后先进行登录
-    login._login();//执行登录
-
     var page = this;
-    page.setData({
-      userInfo: app.globalData.userInfo
-    })
+    //1.进入后先进行登录
+    login._login(page,null);//执行登录
+
   },
 
   //监听是否登录过
