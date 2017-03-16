@@ -1,6 +1,5 @@
 var app = getApp();
 var http = require('../../utils/HttpUtil.js');
-var login = require('../../utils/login.js');
 
 var urlapp = app.globalData.contextUrl;
 var page = 0;
@@ -322,9 +321,6 @@ Page({
 
 
   onLoad: function onLoad() {
-    //1.进入后先进行登录
-    login._login();//执行登录
-
     var $this = this;
     $this.setData({
       hasRefesh: true,

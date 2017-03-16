@@ -1,9 +1,8 @@
 var http = require('../../utils/HttpUtil.js');
-
+var login = require('../../utils/login.js');
 var app = getApp()
 var vlu = app.globalData.register
 var vluyes = app.globalData.regyes
-// var request = require('../../utils/requestService.js')
 
 
 Page({
@@ -12,13 +11,6 @@ Page({
       '../../images/111.jpg',
       '../../images/111.jpg'
     ],
-    // json: [{
-    //   img:'../../images/111.jpg',
-    //   tit:'云狮会数字营销论坛（第十三期）视频营销新时代',
-    //   jia:'35',
-    //   shou:'98'
-    // }
-    // }],
     json: [],
     register: '',
     indicatorDots: true,
@@ -29,8 +21,9 @@ Page({
       a: '云狮会数字营销论坛（第十三期）视频营销新时代',
       b: '云狮会数字营销论坛（第16期）：自媒体变现的道与术'
     },
+    userInfo: {},
     nicname: '',
-    avatarUrl: ''
+    avatarUrl: app.globalData.userInfo.avatarUrl
   },
   changeIndicatorDots: function (e) {
     this.setData({
@@ -113,20 +106,28 @@ Page({
     })
   },
   onLoad: function () {
-    var page = this;
+    //1.进入后先进行登录
+    login._login();//执行登录
 
+    var page = this;
     page.setData({
-      avatarUrl: app.globalData.userInfo.avatarUrl,
-      nicname: app.globalData.userInfo.nickName
+      userInfo: app.globalData.userInfo
     })
   },
 
   //监听是否登录过
   onShow: function () {
+    var allowUserInfo = wx.getStorageSync('allowUserInfo');
+    if (allowUserInfo == '2') {
+      wx.showToast({
+        title: '没有允许登录',
+        icon: 'loading',
+        duration: 2000
+      })
+    }
     this.setData({
       register: true
     })
-    // console.log('重新加载了')
   }
 })
 

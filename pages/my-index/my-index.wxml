@@ -2,10 +2,10 @@
 <view class="page-index" wx:if="{{register}}">
     <view class="top">
         <view class="top-left">
-            <image src="{{avatarUrl}}"></image>
+            <image src="{{userInfo.avatarUrl}}"></image>
         </view>
         <view class="top-right">
-            <view class="top-right-1">{{nicname}}</view>
+            <view class="top-right-1">{{userInfo.nickName}}</view>
         </view>
     </view>
     <!--活动标题-->
