@@ -14,7 +14,7 @@ Page({
         category: '票种2',
         order: {}
     },
-    onLoad: function (options) {  
+    onLoad: function (options) {
         var order = wx.getStorageSync('order');
         this.setData({
             order: order.details[0]
@@ -66,6 +66,7 @@ Page({
 //呼起微信支付窗口，回调支付成功
 function requestWxPay() {
     var payparam = wx.getStorageSync('payparam');
+    var order = wx.getStorageSync('order');
     if (payparam) {
         wx.requestPayment({
             "timeStamp": payparam.timeStamp,
@@ -80,13 +81,16 @@ function requestWxPay() {
                     success: function (res) {
                         if (res.confirm) {
                             wx.navigateTo({
-                                url: '../piao/piao'
+                                url: '../piao/piao?orderId=' + order.id
                             })
                         }
                     }
                 })
             },
             "fail": function (res) {
+                wx.redirectTo({
+                    url: '../my-index/my-index'
+                })
             }
         })
     }

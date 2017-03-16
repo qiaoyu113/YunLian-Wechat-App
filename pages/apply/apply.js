@@ -76,10 +76,6 @@ Page({
     //确认订单验证
     formSubmit: function (e) {
         var infos = e.detail.value;
-        infos.name = infos.姓名;
-        infos.phone = infos.手机;
-        delete infos.姓名;
-        delete infos.手机;
         infos.actId = actId;
         infos.openId = app.globalData.openId;
         infos.tradeType = 'JSAPI';
@@ -87,14 +83,41 @@ Page({
 
         http._post("open/wx/apply", { 'actId': actId, 'infos': JSON.stringify(infos), 'orderDetail': JSON.stringify(orderDetails) }, function (successRes) {
             if (successRes.data.success) {
-                wx.setStorageSync('payparam', successRes.data.wx_jsapi_pay);
-                wx.setStorageSync('order', successRes.data.order);
-                wx.navigateTo({
-                    url: '../waitapply/waitapply'
-                })
+                if (successRes.data.status == 1) {//付费订单-待支付
+                    wx.setStorageSync('payparam', successRes.data.wx_jsapi_pay);
+                    wx.setStorageSync('order', successRes.data.order);
+                    wx.navigateTo({
+                        url: '../waitapply/waitapply'
+                    })
+                } else if (successRes.data.status == 2) {//免费订单-待审核
+                    wx.showModal({
+                        title: '提示',
+                        content: successRes.data.msg,
+                        success: function (res) {
+                            if (res.confirm) {
+                                wx.navigateTo({
+                                    url: '../my-index/my-index'
+                                })
+                            }
+                        }
+                    })
+                } else if (successRes.data.status == 3) {//免费订单-成功
+                    wx.showModal({
+                        title: '提示',
+                        content: successRes.data.msg,
+                        success: function (res) {
+                            if (res.confirm) {
+                                wx.navigateTo({
+                                    url: '../piao/piao?orderId=' + successRes.data.orderId
+                                })
+                            }
+                        }
+                    })
+                }
+
             } else {
                 wx.showToast({
-                    title: '下单出错了，尝试重新下单',
+                    title: successRes.data.msg,
                     icon: 'loading',
                     duration: 2000
                 });

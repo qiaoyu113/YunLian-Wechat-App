@@ -67,30 +67,36 @@
 
       <!--必填项-->
       <view wx:if="{{item.must == 1}}">
+        <view wx:if="{{item.key == '姓名' || item.key == '手机'}}">
+          <input wx-if="{{item.key == '姓名'}}" id="inp" name="name" value="{{name}}" class="particulars-inp" type="text" bindinput="userNameInput" />
+          <input wx-if="{{item.key == '手机'}}" id="inp" name="phone" value="{{phone}}" class="particulars-inp" type="text" bindinput="userNameInput" />
+        </view>
+        <view wx:else>
 
-        <!--单行-->
-        <input wx-if="{{item.type == 'danh'}}" id="inp" name="{{item.key}}" class="particulars-inp" type="text" placeholder="请输入内容-必填" bindinput="userNameInput" />
+          <!--单行-->
+          <input wx-if="{{item.type == 'danh'}}" id="inp" name="{{item.key}}" class="particulars-inp" type="text" placeholder="请输入内容-必填" bindinput="userNameInput" />
 
-        <!--多行-->
-        <textarea wx-if="{{item.type == 'duoh'}}" id="text" name="{{item.key}}" class="particulars-text" type="text" placeholder="请输入内容-必填" bindinput="passWdInput" />
+          <!--多行-->
+          <textarea wx-if="{{item.type == 'duoh'}}" id="text" name="{{item.key}}" class="particulars-text" type="text" placeholder="请输入内容-必填" bindinput="passWdInput" />
 
-        <!--单选-->
-        <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}" name="{{item.key}}">
-          <label class="radio2" wx:for="{{danx}}" wx:for-item="idx">
-            <view wx:for="{{idx}}">
-              <radio value="{{item}}" checked="{{checked}}" />{{item}}
-            </view>
-          </label>
-        </radio-group>
+          <!--单选-->
+          <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}" name="{{item.key}}">
+            <label class="radio2" wx:for="{{danx}}" wx:for-item="idx">
+              <view wx:for="{{idx}}">
+                <radio value="{{item}}" checked="{{checked}}" />{{item}}
+              </view>
+            </label>
+          </radio-group>
 
-        <!--多选-->
-        <checkbox-group bindchange="checkboxChange" wx-if="{{item.type == 'duox'}}" name="{{item.key}}">
-          <label class="radio2" wx:for="{{duox}}" wx:for-item="id">
-            <view wx:for="{{id}}">
-              <checkbox value="{{item}}" checked="{{checked2}}" />{{item}}
-            </view>
-          </label>
-        </checkbox-group>
+          <!--多选-->
+          <checkbox-group bindchange="checkboxChange" wx-if="{{item.type == 'duox'}}" name="{{item.key}}">
+            <label class="radio2" wx:for="{{duox}}" wx:for-item="id">
+              <view wx:for="{{id}}">
+                <checkbox value="{{item}}" checked="{{checked2}}" />{{item}}
+              </view>
+            </label>
+          </checkbox-group>
+        </view>
       </view>
 
       <!--非必填项-->
