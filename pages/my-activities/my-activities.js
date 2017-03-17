@@ -43,15 +43,8 @@ Page({
       step: options.step,
     })
     var that = this
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
-    })
 
-    http._post('open/wx/myact.html', { 'type': type1, 'pageNo': 1, 'phone': '17773812402' }, function (sessionRes) {//成功回调
+    http._post('open/wx/myact.html', { 'type': type1, 'pageNo': 1 }, function (sessionRes) {//成功回调
       status = sessionRes.data.status
       var len = sessionRes.data.page
       if (status == 'OK') {
@@ -73,9 +66,8 @@ Page({
     })
   },
   chakan: function (e) {
-    var actId = e.currentTarget.dataset.id;
-    var url = '../piao/piao?actId=' + actId;
-    console.log(url)
+    var orderId = e.currentTarget.dataset.id;
+    var url = '../piao/piao?orderId=' + orderId;
     wx.navigateTo({
       url: url
     })

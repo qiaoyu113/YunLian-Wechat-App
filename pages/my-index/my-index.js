@@ -48,22 +48,6 @@ Page({
     wx.navigateTo({
       url: '../my-activities/my-activities?step=1&type=0'
     })
-    //写入参数
-    // wx.request({
-    //   url: xqUrl + '&type=0&phone=18518757835',
-    //   data: {},
-    //   method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    //   // header: {}, // 设置请求的 header
-    //   success: function(res){
-    //     for(var i = 0;i<res.data.page.datas.length;i++){
-    //       json.push(res.data.pages.datas[i]);
-    //     }
-    //     console.log(res.data.page.datas)
-    //   },
-    //   fail: function() {
-    //     // fail
-    //   },
-    // })
   },
   allbtn1: function () {
     wx.navigateTo({
