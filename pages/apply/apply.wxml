@@ -62,7 +62,7 @@
             <!--单行-->
             <input wx-if="{{item.type == 'danh'}}" id="inp" class="particulars-inp" type="text" placeholder="请输入内容-必填" bindinput="userNameInput"/>
             <!--多行-->
-            <textarea wx-if="{{item.type == 'duoh'}}" id="text" class="particulars-text" type="text" placeholder="请输入内容-必填" bindinput="passWdInput"/>
+            <textarea wx-if="{{item.type == 'duoh'}}" id="text" class="particulars-text" type="text" placeholder="请输入内容-必填" bindinput="passWdInput" />
             <!--单选-->
             <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}">
                 <label class="radio2" wx:for="{{danx}}" wx:for-item="idx">
@@ -85,7 +85,7 @@
             <!--单行-->
             <input wx-if="{{item.type == 'danh'}}" class="particulars-inp" type="text" placeholder="请输入内容-非必填"/>
             <!--多行-->
-            <textarea wx-if="{{item.type == 'duoh'}}" class="particulars-text" type="text" placeholder="请输入内容-非必填"/>
+            <textarea wx-if="{{item.type == 'duoh'}}" id="text" class="particulars-text" type="text" placeholder="请输入内容-非必填"/>
             <!--单选-->
             <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}">
                 <label class="radio2" wx:for="{{danx}}" wx:for-item="idx">

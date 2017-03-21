@@ -3,6 +3,10 @@ var WxParse = require('../../wxParse/wxParse.js');
 var app = getApp()
 var xqurl = app.globalData.xqUrl
 var actId = ''
+var latitude = ''
+var longitude = ''
+var lat = '' //精度
+var lng = '' //纬度
 
 
 function toDate(number) {
@@ -26,6 +30,8 @@ Page({
     accuracy: 16,//位置精准度 
     markers: [], 
     covers: [], 
+    lat:'',
+    lng:'',
   },
   onLoad: function (options) {
     var $this = this;
@@ -38,6 +44,8 @@ Page({
       method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {}, // 设置请求的 header
       success: function success(res) {
+          lat = res.data.lat
+          lng = res.data.lng
           var logs = res.data.activity
           htm = res.data.activity.activityDetails
           res.data.activity.actStartTime = toDate(res.data.activity.actStartTime)
@@ -47,6 +55,8 @@ Page({
           $this.setData({
               hiddenLoading: true,
               logs: logs,
+              lat:lat,
+              lng:lng
           });
           var article = htm;
           
@@ -60,8 +70,6 @@ Page({
         // complete
       }
     })
-    
-    
   },
   toast:function(e){
     var url = '../apply/apply?actId=' + actId;
@@ -81,7 +89,7 @@ Page({
 
   getlocation: function () { 
     wx.navigateTo({
-      url:'../map/map'
+      url:'../map/map?lat='+ lat +'&&lng='+lng
     })
  } 
   

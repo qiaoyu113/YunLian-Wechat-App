@@ -224,7 +224,7 @@
     left:0;
     right:0;
     background:#fff;
-    z-index:30;
+    z-index:100;
 }
 .btn-price{
     float:left;
@@ -252,6 +252,7 @@
     line-height:140rpx;
     font-size:28rpx;
     padding:10rpx 20rpx;
+    z-index:10;
 }
 .radio2{
     border-bottom:1rpx solid #d7d7d7;
