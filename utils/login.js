@@ -13,12 +13,12 @@ function login(page, url) {
                 getUserInfo(page, url);
             } else if (wx.getStorageSync('bindPhone') != '1') {
                 wx.navigateTo({
-                    url: '../register/register?register=true'
+                    url: '../WeChat-login/WeChat-login'
                 })
             } else {
                 if (page != null) {
                     page.setData({
-                        userInfo: app.globalData.userInfo
+                        userInfo: wx.getStorageSync('userInfo')
                     })
                 }
             }
@@ -71,29 +71,29 @@ function getUserInfo(page, url) {
     wx.getUserInfo({//4.获取用户信息
         success: function (result) {
             wx.setStorageSync('allowUserInfo', '1');//允许获取用户信息
-            app.globalData.userInfo = result.userInfo;//用户信息放到gloableData中
+            wx.setStorageSync('userInfo', result.userInfo)
+            // app.globalData.userInfo = result.userInfo;//用户信息放到gloableData中
             if (page != null) {
                 page.setData({
-                    userInfo: app.globalData.userInfo
+                    userInfo: result.userInfo
                 })
             }
             http._post('open/decodeUserInfo', { 'encryptedData': result.encryptedData, 'iv': result.iv }, function (userInfoRes) {
-                app.globalData.openId = userInfoRes.data.result.obj.openId;
+                wx.setStorageSync('openId', userInfoRes.data.result.obj.openId);
+                // app.globalData.openId = userInfoRes.data.result.obj.openId;
                 var bindPhone = userInfoRes.data.result.obj.bindPhone;
                 if (!bindPhone) {
                     wx.setStorageSync('bindPhone', '0');//标识下没有绑定手机号
-                    wx.showToast({
-                        title: 'BindPhone',
-                        icon: 'loading',
-                        duration: 2000
-                    });
+                    wx.setStorageSync('bindRandom', userInfoRes.data.result.obj.thirdSessionKey);//绑定标识
                     wx.navigateTo({
-                        url: '../register/register?register=true'
+                        url: '../WeChat-login/WeChat-login'
                     })
                 } else {
                     wx.setStorageSync('bindPhone', '1');//绑定手机号
-                    app.globalData.userInfo.name = userInfoRes.data.result.obj.name;
-                    app.globalData.userInfo.phone = userInfoRes.data.result.obj.phone;
+                    var userInfoStorage = wx.getStorageSync('userInfo');
+                    userInfoStorage.name = userInfoRes.data.result.obj.name;
+                    userInfoStorage.phone = userInfoRes.data.result.obj.phone;
+                    wx.setStorageSync('userInfo', userInfoStorage);
                     if (url != null) {
                         wx.navigateTo({
                             url: url

@@ -35,7 +35,6 @@ function toDate(number) {
 
 
 Page({
-
     data: {
         json: json,
         tickets: tickets,
@@ -52,15 +51,12 @@ Page({
         duox: duox,
         infoMess: '',
         userName: '',
-
         userN: '',
         passWd: '',
-
         passW: '',
         zong: zong,
         price: price,
         inputContent: {},
-
         userId: '',
         passId: '',
         ticketId: '',
@@ -70,7 +66,6 @@ Page({
 
     userNameInput: function (e) {
         this.setData({
-
             userN: e.detail.value,
             passId: e.currentTarget.id
         })
@@ -78,7 +73,6 @@ Page({
 
     passWdInput: function (e) {
         this.setData({
-
             passW: e.detail.value,
             passId: e.currentTarget.id
         })
@@ -90,8 +84,6 @@ Page({
         infos.actId = actId;
         infos.openId = app.globalData.openId;
         infos.tradeType = 'JSAPI';
-
-
         http._post("open/wx/apply", { 'actId': actId, 'infos': JSON.stringify(infos), 'orderDetail': JSON.stringify(orderDetails) }, function (successRes) {
             if (successRes.data.success) {
                 if (successRes.data.status == 1) {//付费订单-待支付
@@ -220,7 +212,6 @@ Page({
             }
             buildOrderDetails(ticketId, 1);
             that.setData({
-
                 json: json,
                 tickets: tickets,
                 kind: kind,
@@ -244,14 +235,12 @@ Page({
         var num = this.data.num;
         // 如果只有1件了，就不允许再减了
         if (num > 1) {
-
             num--;
         } else {
             num = 1
         }
         buildOrderDetails(null, num);
         this.setData({
-
             num: num
         })
     },
@@ -260,16 +249,13 @@ Page({
     bindPlus: function (e) {
         var num = this.data.num;
         var limitNum = this.data.limitNum
-
         if (num >= 1 && num < limitNum) {
             num++;
-
         } else {
             num = num;
         }
         buildOrderDetails(null, num);
         this.setData({
-
             num: num
         })
     }

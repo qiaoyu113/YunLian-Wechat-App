@@ -45,24 +45,44 @@ Page({
     })
   },
   allbtn: function () {
-    wx.navigateTo({
-      url: '../my-activities/my-activities?step=1&type=0'
-    })
+    var url = '../my-activities/my-activities?step=1&type=0'
+    if (wx.getStorageSync('bindPhone') != '1') {//没绑定手机先执行登录
+      login._login(null, url);
+    } else {
+      wx.navigateTo({
+        url: url
+      })
+    }
   },
   allbtn1: function () {
-    wx.navigateTo({
-      url: '../my-activities/my-activities?step=2&type=1'
-    })
+    var url = '../my-activities/my-activities?step=2&type=1'
+    if (wx.getStorageSync('bindPhone') != '1') {//没绑定手机先执行登录
+      login._login(null, url);
+    } else {
+      wx.navigateTo({
+        url: url
+      })
+    }
   },
   allbtn2: function () {
-    wx.navigateTo({
-      url: '../my-activities/my-activities?step=3&type=2'
-    })
+    var url = '../my-activities/my-activities?step=3&type=2'
+    if (wx.getStorageSync('bindPhone') != '1') {//没绑定手机先执行登录
+      login._login(null, url);
+    } else {
+      wx.navigateTo({
+        url: url
+      })
+    }
   },
   allbtn3: function () {
-    wx.navigateTo({
-      url: '../my-activities/my-activities?step=4&type=3'
-    })
+    var url = '../my-activities/my-activities?step=4&type=3'
+    if (wx.getStorageSync('bindPhone') != '1') {//没绑定手机先执行登录
+      login._login(null, url);
+    } else {
+      wx.navigateTo({
+        url: url
+      })
+    }
   },
   onwxLoad: function () {
     var page = this
@@ -91,7 +111,7 @@ Page({
   onLoad: function () {
     var page = this;
     //1.进入后先进行登录
-    login._login(page,null);//执行登录
+    login._login(page, null);//执行登录
 
   },
 
@@ -105,6 +125,14 @@ Page({
         duration: 2000
       })
     }
+    // else {
+    //   var bindPhone = wx.getStorageSync('bindPhone');
+    //   if (bindPhone == '0') {
+    //     wx.navigateTo({
+    //       url: '../WeChat-login/WeChat-login'
+    //     })
+    //   }
+    // }
     this.setData({
       register: false
     })

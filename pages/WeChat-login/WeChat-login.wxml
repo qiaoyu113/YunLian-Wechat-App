@@ -1,8 +1,8 @@
 <view class="page">
     <view class="img">
-        <image src="{{avatarUrl}}"></image>
+        <image src="{{userInfo.avatarUrl}}"></image>
     </view>
-    <view class="admin-name">{{nicname}}</view>
+    <view class="admin-name">{{userInfo.nickName}}</view>
 
     <view class="phone" bindtap="phone">注册并绑定企智网账号</view>
     <view class="phone1" bindtap="phone1">绑定企智网已有账号</view>

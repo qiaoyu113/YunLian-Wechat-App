@@ -17,13 +17,11 @@ function toDate(number) {
   var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
   var H = date.getHours();
   var F = date.getMinutes()
-
   return (M + D + ' ' + H + ':' + F)
 }
 
 Page({
   data: {
-
     time: {},
     btn: 1,
     logs: {},
@@ -31,52 +29,36 @@ Page({
     longitude: 0,//经度 
     speed: 0,//速度 
     accuracy: 16,//位置精准度 
-
     markers: [],
     covers: [],
-    lat:'',
-    lng:'',
+    lat: '',
+    lng: '',
   },
   onLoad: function (options) {
     var $this = this;
     var htm = '';
     actId = options.actId
 
-    // console.log(options.actId)
-    wx.request({
-      url: xqurl + options.actId + '.html?format=json',
-      data: {},
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
-      success: function success(res) {
-          lat = res.data.lat
-          lng = res.data.lng
-          var logs = res.data.activity
-          htm = res.data.activity.activityDetails
-          res.data.activity.actStartTime = toDate(res.data.activity.actStartTime)
-          res.data.activity.actEndTime = toDate(res.data.activity.actEndTime)
-          res.data.activity.signupStartTime = toDate(res.data.activity.signupStartTime)
-          res.data.activity.signupEndTime = toDate(res.data.activity.signupEndTime)
-          $this.setData({
-              hiddenLoading: true,
-              logs: logs,
-              lat:lat,
-              lng:lng
-          });
-          var article = htm;
-          
-          WxParse.wxParse('article', 'html', article, $this, 5);
-      },
-                      
-      fail: function() {
-        // fail
-      },
-      complete: function() {
-        // complete
-      }
-    })
-  },
+    http._post('activity/' + actId + '.html', null, function (successRes) {
+      lat = successRes.data.lat
+      lng = successRes.data.lng
+      var logs = successRes.data.activity
+      htm = successRes.data.activity.activityDetails
+      successRes.data.activity.actStartTime = toDate(successRes.data.activity.actStartTime)
+      successRes.data.activity.actEndTime = toDate(successRes.data.activity.actEndTime)
+      successRes.data.activity.signupStartTime = toDate(successRes.data.activity.signupStartTime)
+      successRes.data.activity.signupEndTime = toDate(successRes.data.activity.signupEndTime)
+      $this.setData({
+        hiddenLoading: true,
+        logs: logs,
+        lat: lat,
+        lng: lng
+      });
+      var article = htm;
 
+      WxParse.wxParse('article', 'html', article, $this, 5);
+    }, function () { }, function () { });
+  },
   toast: function (e) {
     var url = '../apply/apply?actId=' + actId;
     if (wx.getStorageSync('bindPhone') != '1') {//没绑定手机先执行登录
@@ -87,12 +69,9 @@ Page({
       })
     }
   },
-
-
   getlocation: function () {
     wx.navigateTo({
-
-      url:'../map/map?lat='+ lat +'&&lng='+lng
+      url: '../map/map?lat=' + lat + '&&lng=' + lng
     })
 
   }
