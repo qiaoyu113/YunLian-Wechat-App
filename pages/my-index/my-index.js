@@ -1,9 +1,7 @@
 var http = require('../../utils/HttpUtil.js');
-
+var login = require('../../utils/login.js');
 var app = getApp()
-var vlu = app.globalData.register
 var vluyes = app.globalData.regyes
-// var request = require('../../utils/requestService.js')
 
 
 Page({
@@ -12,13 +10,6 @@ Page({
       '../../images/111.jpg',
       '../../images/111.jpg'
     ],
-    // json: [{
-    //   img:'../../images/111.jpg',
-    //   tit:'云狮会数字营销论坛（第十三期）视频营销新时代',
-    //   jia:'35',
-    //   shou:'98'
-    // }
-    // }],
     json: [],
     register: '',
     indicatorDots: true,
@@ -29,8 +20,9 @@ Page({
       a: '云狮会数字营销论坛（第十三期）视频营销新时代',
       b: '云狮会数字营销论坛（第16期）：自媒体变现的道与术'
     },
+    userInfo: {},
     nicname: '',
-    avatarUrl: ''
+    avatarUrl: app.globalData.userInfo.avatarUrl
   },
   changeIndicatorDots: function (e) {
     this.setData({
@@ -56,22 +48,6 @@ Page({
     wx.navigateTo({
       url: '../my-activities/my-activities?step=1&type=0'
     })
-    //写入参数
-    // wx.request({
-    //   url: xqUrl + '&type=0&phone=18518757835',
-    //   data: {},
-    //   method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    //   // header: {}, // 设置请求的 header
-    //   success: function(res){
-    //     for(var i = 0;i<res.data.page.datas.length;i++){
-    //       json.push(res.data.pages.datas[i]);
-    //     }
-    //     console.log(res.data.page.datas)
-    //   },
-    //   fail: function() {
-    //     // fail
-    //   },
-    // })
   },
   allbtn1: function () {
     wx.navigateTo({
@@ -114,79 +90,24 @@ Page({
   },
   onLoad: function () {
     var page = this;
-    //调用登录接口
-    wx.login({
-      success: function (loginRes) {
-        if (loginRes.code) {
-          http._post_json('open/wx/getSession',{code: loginRes.code},null,null);
-          wx.request({//code换取openid+session_key
-            url: 'https://dutao.s1.natapp.cc/open/wx/getSession?format=json',
-            data: {
-              code: loginRes.code
-            },
-            method: 'GET',
-            success: function (sessionRes) {
-              if (sessionRes) {
-                wx.setStorage({
-                  key: '3rdSessionId',
-                  data: sessionRes.data.string,
-                  success: function (res) {
-                    console.log('第三方sessionId保存成功');
-                  },
-                  fail: function () {
-                    // fail
-                  },
-                  complete: function () {
-                    // complete
-                  }
-                })
-                wx.getUserInfo({
-                  success: function (result) {
-                    page.setData({
-                      avatarUrl: result.userInfo.avatarUrl,
-                      nicname: result.userInfo.nickName
-                    })
-                    wx.request({
-                      url: 'https://dutao.s1.natapp.cc/open/wx/decodeUserInfo?format=json',
-                      data: {
-                        sessionId: sessionRes.data.string,
-                        encryptedData: result.encryptedData,
-                        iv: result.iv
-                      },
-                      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-                      // header: {}, // 设置请求的 header
-                      success: function (userInfoRes) {
-                        console(userInfoRes);
-                      },
-                      fail: function () {
-                        // fail
-                      },
-                      complete: function () {
-                        // complete
-                      }
-                    })
-                  }
-                })
-              }
-            },
-            fail: function () {
-              // fail
-            },
-            complete: function () {
-              // complete
-            }
-          })
-        }
-      }
-    })
+    //1.进入后先进行登录
+    login._login(page,null);//执行登录
+
   },
 
   //监听是否登录过
   onShow: function () {
+    var allowUserInfo = wx.getStorageSync('allowUserInfo');
+    if (allowUserInfo == '2') {
+      wx.showToast({
+        title: '没有允许登录',
+        icon: 'loading',
+        duration: 2000
+      })
+    }
     this.setData({
       register: false
     })
-    // console.log('重新加载了')
   }
 })
 

@@ -1,7 +1,8 @@
 var utils = require('../../utils/utils.js');
+var login = require('../../utils/login.js');
+var http = require('../../utils/HttpUtil.js');
 var WxParse = require('../../wxParse/wxParse.js');
 var app = getApp()
-var xqurl = app.globalData.xqUrl
 var actId = ''
 var latitude = ''
 var longitude = ''
@@ -16,20 +17,23 @@ function toDate(number) {
   var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
   var H = date.getHours();
   var F = date.getMinutes()
-  return (M + D +' '+ H + ':' + F )
+
+  return (M + D + ' ' + H + ':' + F)
 }
 
 Page({
   data: {
-    time:{},
-    btn:1,
-    logs:{},
+
+    time: {},
+    btn: 1,
+    logs: {},
     latitude: 0,//纬度 
     longitude: 0,//经度 
     speed: 0,//速度 
     accuracy: 16,//位置精准度 
-    markers: [], 
-    covers: [], 
+
+    markers: [],
+    covers: [],
     lat:'',
     lng:'',
   },
@@ -37,6 +41,7 @@ Page({
     var $this = this;
     var htm = '';
     actId = options.actId
+
     // console.log(options.actId)
     wx.request({
       url: xqurl + options.actId + '.html?format=json',
@@ -71,26 +76,25 @@ Page({
       }
     })
   },
-  toast:function(e){
+
+  toast: function (e) {
     var url = '../apply/apply?actId=' + actId;
-    wx.navigateTo({
-      url: url,
-      success: function(res){
-        // success
-      },
-      fail: function() {
-        // fail
-      },
-      complete: function() {
-        // complete
-      }
-    })
+    if (wx.getStorageSync('bindPhone') != '1') {//没绑定手机先执行登录
+      login._login(null, url);
+    } else {
+      wx.navigateTo({
+        url: url
+      })
+    }
   },
 
-  getlocation: function () { 
+
+  getlocation: function () {
     wx.navigateTo({
+
       url:'../map/map?lat='+ lat +'&&lng='+lng
     })
- } 
-  
+
+  }
+
 })

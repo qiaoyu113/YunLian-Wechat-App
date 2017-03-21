@@ -1,6 +1,8 @@
 //index.js
 //获取应用实例
 var app = getApp()
+var http = require('../../utils/HttpUtil.js');
+
 var myUrl = app.globalData.myUrl
 var json = [];
 var type1 = '';
@@ -15,7 +17,7 @@ function toDate(number) {
   var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
   var H = date.getHours();
   var F = date.getMinutes()
-  return (Y + M + D +' '+ H + ':' + F )
+  return (Y + M + D + ' ' + H + ':' + F)
 }
 
 
@@ -23,12 +25,12 @@ function toDate(number) {
 Page({
   data: {
     userInfo: {},
-    step:'',
-    status:'',
-    json:json,
+    step: '',
+    status: '',
+    json: json,
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
@@ -38,52 +40,36 @@ Page({
     console.log(options)
     type1 = options.type
     this.setData({
-      step:options.step,
+      step: options.step,
     })
     var that = this
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
-      })
+
+    http._post('open/wx/myact.html', { 'type': type1, 'pageNo': 1 }, function (sessionRes) {//成功回调
+      status = sessionRes.data.status
+      var len = sessionRes.data.page
+      if (status == 'OK') {
+        for (var i = 0; i < len.length; i++) {
+          sessionRes.data.page[i].actStartTime = toDate(sessionRes.data.page[i].actStartTime)
+          json.push(sessionRes.data.page[i]);
+        }
+        that.setData({
+          json: json,
+          status: status
+        })
+      } else {
+        that.setData({
+          status: status
+        })
+      }
+    }, function (fail) {
+    }, function (complete) {
     })
-    //写入参数
-      wx.request({
-        url: myUrl + '&type=' + type1 + '&phone=17773812402&pageNo=1',
-        data: {},
-        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-        // header: {}, // 设置请求的 header
-        success: function(res){
-          status = res.data.status
-          var len = res.data.page
-          if(status == 'OK'){
-            for(var i = 0;i<len.length;i++){
-              res.data.page[i].actStartTime = toDate(res.data.page[i].actStartTime)
-              json.push(res.data.page[i]);
-            }
-            that.setData({
-              json:json,
-              status:status
-            })
-          }else{
-            that.setData({
-              status:status
-            })
-          }
-        },
-        fail: function() {
-          // fail
-        },
-      })
-     
   },
-  chakan:function(e){
-    var actId = e.currentTarget.dataset.id;
-    var url = '../piao/piao?actId='+ actId;
-    console.log(url)
+  chakan: function (e) {
+    var orderId = e.currentTarget.dataset.id;
+    var url = '../piao/piao?orderId=' + orderId;
     wx.navigateTo({
-      url:url
+      url: url
     })
   }
 })

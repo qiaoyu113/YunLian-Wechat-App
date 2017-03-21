@@ -1,130 +1,161 @@
 <view class="page">
-    <!--票的详情页-->
-    <view class="top">
-        <view class="top-left">
-            <image src="{{'http://test.resource.vjuzhen.com/' + json.activityPoster}}"></image>
-        </view>
-        <view class="top-right">
-            <view class="top-right-tit">{{json.activityTitle}}</view>
-            <view class="top-right-time">时间：{{json.actStartTime}}至 {{json.actEndTime}}</view>
-            <view class="top-right-address">地点：{{json.prov}}{{json.city}}{{json.activityAddress}}</view>
-        </view>
+
+  <!--票的详情页-->
+  <view class="top">
+    <view class="top-left">
+      <image src="{{'http://test.resource.vjuzhen.com/' + json.activityPoster}}"></image>
     </view>
-    <!--选择票种标题-->
-    <view class="form-block-title">
-        <view class="title-left"></view>
-        <view class="title-center">选择票种</view>
-        <view class="title-right"></view>
+    <view class="top-right">
+      <view class="top-right-tit">{{json.activityTitle}}</view>
+      <view class="top-right-time">时间：{{json.actStartTime}}至 {{json.actEndTime}}</view>
+      <view class="top-right-address">地点：{{json.prov}}{{json.city}}{{json.activityAddress}}</view>
     </view>
+  </view>
 
+  <!--选择票种标题-->
+  <view class="form-block-title">
+    <view class="title-left"></view>
+    <view class="title-center">选择票种</view>
+    <view class="title-right"></view>
+  </view>
 
-    <!--选择票种内容-->
-    <radio-group class="radio-group" bindchange="radioChange">
-        <label class="radio top3" wx:for-items="{{tickets}}" id="{{item.totalNum}}" bindtap="totalNum" data-limitNum="{{item.limitNum}}" data-zong="{{price/100}}">
-            <view class="top3-left">
-                <view class="top3-left-1">{{item.name}}</view>
-                <view class="top3-left-2">￥{{item.price/100}}</view>
-            </view>
-            <view class="top3-right">
-                <radio value="{{item.detail}}" checked="{{checked}}" />
-            </view>   
-        </label>
-    </radio-group>
-    <!--报名（免费/收费）-->
-    <view class="apply">{{kind}}</view>
+  <!--选择票种内容-->
+  <radio-group class="radio-group" bindchange="radioChange">
+    <label class="radio top3" wx:for-items="{{tickets}}" wx:key='ticket' id="{{item.totalNum}}" bindtap="totalNum" data-limitNum="{{item.limitNum}}" data-zong="{{price/100}}" data-ticketId="{{item.id}}">
+      <view class="top3-left">
+        <view class="top3-left-1">{{item.name}}</view>
+        <view class="top3-left-2">￥{{item.price/100}}</view>
+      </view>
+      <view class="top3-right">
+        <radio value="{{item.detail}}" checked="{{checked}}" />
+      </view>
+    </label>
+  </radio-group>
 
+  <!--报名（免费/收费）-->
+  <view class="apply">{{kind}}</view>
 
+  <!--购买票数-->
+  <view class="top4">
+    <view class="top4-left">剩余{{totalNum}}张/每人限购{{limitNum}}张</view>
+    <view class="stepper">
 
-    <!--购买票数-->
-    <view class="top4">
-        <view class="top4-left">剩余{{totalNum}}张/每人限购{{limitNum}}张</view>
-        <view class="stepper">
-            <!-- 减号 -->
-            <text class="jian" data-index="{{num}}" bindtap="bindMinus">-</text>
-            <!-- 数值 -->
-            <input class="inp" type="number" bindchange="bindManual" value="{{num}}" readOnly="true" disabled/>
-            <!-- 加号 -->
-            <text class="normal" data-index="{{num}}" bindtap="bindPlus">+</text>
-       </view>
+      <!-- 减号 -->
+      <text class="jian" data-index="{{num}}" bindtap="bindMinus">-</text>
+
+      <!-- 数值 -->
+      <input class="inp" type="number" bindchange="bindManual" value="{{num}}" readOnly="true" disabled/>
+
+      <!-- 加号 -->
+      <text class="normal" data-index="{{num}}" bindtap="bindPlus">+</text>
     </view>
-    <!--报名信息标题-->
-    <view class="form-block-title">
-        <view class="title-left"></view>
-        <view class="title-center">报名信息</view>
-        <view class="title-right"></view>
-    </view>
+  </view>
+
+  <!--报名信息标题-->
+  <view class="form-block-title">
+    <view class="title-left"></view>
+    <view class="title-center">报名信息</view>
+    <view class="title-right"></view>
+  </view>
+  <form bindsubmit="formSubmit">
+
     <!--报名信息详情-->
-    <view class="particulars" wx:for="{{staffSign}}">
-        <!--姓名-->
-        <view class="name particulars-list">{{item.key}}<span wx-if="{{item.must == 1}}">*</span><span wx-elif="{{item.must == 0}}"></span></view>
-        <!--必填项-->
-        <view wx:if="{{item.must == 1}}">
-            <!--单行-->
-            <input wx-if="{{item.type == 'danh'}}" id="inp" class="particulars-inp" type="text" placeholder="请输入内容-必填" bindinput="userNameInput"/>
-            <!--多行-->
-            <textarea wx-if="{{item.type == 'duoh'}}" id="text" class="particulars-text" type="text" placeholder="请输入内容-必填" bindinput="passWdInput" />
-            <!--单选-->
-            <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}">
-                <label class="radio2" wx:for="{{danx}}" wx:for-item="idx">
-                    <view wx:for="{{idx}}">
-                        <radio  value="{{item.index}}" checked="{{checked}}"/>{{item}}
-                    </view>
-                </label>
-            </radio-group>
-            <!--多选-->
-            <checkbox-group bindchange="checkboxChange" wx-if="{{item.type == 'duox'}}">
-                <label class="radio2" wx:for="{{duox}}" wx:for-item="id">
-                    <view wx:for="{{id}}">
-                        <checkbox value="{{item.index}}" checked="{{checked2}}"/>{{item}}
-                    </view>
-                </label>
-            </checkbox-group>
+    <view class="particulars" wx:for="{{staffSign}}" wx:key='staff'>
+
+      <!--姓名-->
+      <view class="name particulars-list">{{item.key}}<span wx-if="{{item.must == 1}}">*</span>  <span wx-elif="{{item.must == 0}}"></span>  </view>
+
+      <!--必填项-->
+      <view wx:if="{{item.must == 1}}">
+        <view wx:if="{{item.key == '姓名' || item.key == '手机'}}">
+          <input wx-if="{{item.key == '姓名'}}" id="inp" name="name" value="{{name}}" class="particulars-inp" type="text" bindinput="userNameInput" />
+          <input wx-if="{{item.key == '手机'}}" id="inp" name="phone" value="{{phone}}" class="particulars-inp" type="text" bindinput="userNameInput" />
         </view>
-        <!--非必填项-->
-        <view wx:if="{{item.must == 0}}">
-            <!--单行-->
-            <input wx-if="{{item.type == 'danh'}}" class="particulars-inp" type="text" placeholder="请输入内容-非必填"/>
-            <!--多行-->
-            <textarea wx-if="{{item.type == 'duoh'}}" id="text" class="particulars-text" type="text" placeholder="请输入内容-非必填"/>
-            <!--单选-->
-            <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}">
-                <label class="radio2" wx:for="{{danx}}" wx:for-item="idx">
-                    <view wx:for="{{idx}}">
-                        <radio  value="{{item.index}}" checked="{{checked}}"/>{{item}}
-                    </view>
-                </label>
-            </radio-group>
-            <!--多选-->
-            <checkbox-group bindchange="checkboxChange" wx-if="{{item.type == 'duox'}}">
-                <label class="radio2" wx:for="{{duox}}" wx:for-item="id">
-                    <view wx:for="{{id}}">
-                        <checkbox value="{{item.index}}" checked="{{checked2}}"/>{{item}}
-                    </view>
-                </label>
-            </checkbox-group>
+        <view wx:else>
+
+          <!--单行-->
+          <input wx-if="{{item.type == 'danh'}}" id="inp" name="{{item.key}}" class="particulars-inp" type="text" placeholder="请输入内容-必填" bindinput="userNameInput" />
+
+          <!--多行-->
+          <textarea wx-if="{{item.type == 'duoh'}}" id="text" name="{{item.key}}" class="particulars-text" type="text" placeholder="请输入内容-必填" bindinput="passWdInput" />
+
+          <!--单选-->
+          <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}" name="{{item.key}}">
+            <label class="radio2" wx:for="{{danx}}" wx:for-item="idx">
+              <view wx:for="{{idx}}">
+                <radio value="{{item}}" checked="{{checked}}" />{{item}}
+              </view>
+            </label>
+          </radio-group>
+
+          <!--多选-->
+          <checkbox-group bindchange="checkboxChange" wx-if="{{item.type == 'duox'}}" name="{{item.key}}">
+            <label class="radio2" wx:for="{{duox}}" wx:for-item="id">
+              <view wx:for="{{id}}">
+                <checkbox value="{{item}}" checked="{{checked2}}" />{{item}}
+              </view>
+            </label>
+          </checkbox-group>
         </view>
+      </view>
+
+      <!--非必填项-->
+      <view wx:if="{{item.must == 0}}">
+
+        <!--单行-->
+        <input wx-if="{{item.type == 'danh'}}" class="particulars-inp" type="text" placeholder="请输入内容-非必填" name="{{item.key}}" />
+
+        <!--多行-->
+        <textarea wx-if="{{item.type == 'duoh'}}" class="particulars-text" type="text" placeholder="请输入内容-非必填" name="{{item.key}}" />
+
+        <!--单选-->
+        <radio-group class="radio-group" bindchange="radioChange" wx-if="{{item.type == 'danx'}}" name="{{item.key}}">
+          <label class="radio2" wx:for="{{danx}}" wx:for-item="idx">
+            <view wx:for="{{idx}}">
+              <radio value="{{item}}" checked="{{checked}}" />{{item}}
+            </view>
+          </label>
+        </radio-group>
+
+        <!--多选-->
+        <checkbox-group bindchange="checkboxChange" wx-if="{{item.type == 'duox'}}" name="{{item.key}}">
+          <label class="radio2" wx:for="{{duox}}" wx:for-item="id">
+            <view wx:for="{{id}}">
+              <checkbox value="{{item}}" checked="{{checked2}}" />{{item}}
+            </view>
+          </label>
+        </checkbox-group>
+      </view>
     </view>
+
     <!--支付方式title-->
     <view class="form-block-title">
-        <view class="title-left"></view>
-        <view class="title-center">支付方式</view>
-        <view class="title-right"></view>
+      <view class="title-left"></view>
+      <view class="title-center">支付方式</view>
+      <view class="title-right"></view>
     </view>
+
     <!--支付方式-->
     <view class="top5">
-        <view class="top3-left">
-            <view class="wx-icon">
-                <image src="../../images/wx.png"></image>
-            </view>
-            <view class="wx-text">微信</view>
+      <view class="top3-left">
+        <view class="wx-icon">
+          <image src="../../images/wx.png"></image>
         </view>
-        <view class="top3-right">
-            <image src="../../images/dui.png"></image>
-        </view>
+        <view class="wx-text">微信</view>
+      </view>
+      <view class="top3-right">
+        <image src="../../images/dui.png"></image>
+      </view>
     </view>
+
     <!--底部按钮-->
     <view class="bottom-btn">
-        <view class="btn-price">￥{{zong*num}}</view>
-        <view class="btn" bindtap="loginBtnClick">立即报名</view>
+      <view class="btn-price">￥{{zong*num}}</view>
+      <view class="btn" bindtap="loginBtnClick">立即报名</view>
     </view>
+    <view class="bottom-btn">
+      <view class="btn-price">￥{{zong*num}}</view>
+      <button class="btn" formType="submit">立即报名</button>
+    </view>
+  </form>
 </view>

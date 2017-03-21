@@ -1,11 +1,11 @@
 <!--category.wscroll-xml-->
-<view class="page-index" wx:if="{{register}}">
+<view class="page-index">
     <view class="top">
         <view class="top-left">
-            <image src="{{avatarUrl}}"></image>
+            <image src="{{userInfo.avatarUrl}}"></image>
         </view>
         <view class="top-right">
-            <view class="top-right-1">{{nicname}}</view>
+            <view class="top-right-1">{{userInfo.nickName}}</view>
         </view>
     </view>
     <!--活动标题-->
@@ -47,7 +47,7 @@
 </view>
 
 <!--（未登录时出现）登录按钮-->
-<view class="page-index" wx:else>
+<!--<view class="page-index" wx:else>
     <view class="no-dl">尚未登录</view>
     <view class="register" bindtap="onwxLoad">登录</view>
-</view>
+</view>-->
