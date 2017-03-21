@@ -184,7 +184,7 @@ Page({
   //监听是否登录过
   onShow: function () {
     this.setData({
-      register: true
+      register: false
     })
     // console.log('重新加载了')
   }

@@ -4,5 +4,6 @@
     </view>
     <view class="admin-name">{{nicname}}</view>
 
-    <view class="phone" bindtap="phone">绑定启智网账号</view>
+    <view class="phone" bindtap="phone">注册并绑定企智网账号</view>
+    <view class="phone1" bindtap="phone1">绑定企智网已有账号</view>
 </view>

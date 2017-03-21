@@ -29,5 +29,19 @@ Page({
           // complete
         }
       })
+    },
+    phone1:function(){
+      wx.navigateTo({
+        url: '../registered/registered?register=true',
+        success: function(res){
+          // success
+        },
+        fail: function() {
+          // fail
+        },
+        complete: function() {
+          // complete
+        }
+      })
     }
   })

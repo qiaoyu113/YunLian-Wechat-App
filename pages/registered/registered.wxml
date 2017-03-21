@@ -1,0 +1,14 @@
+<view class="page">
+    <view class="top">绑定已有帐号</view>
+    <view class="top2">绑定已有帐号，下次可以直接登录</view>
+    <view class="phonenum">
+        <input class="input1" type="number" placeholder="手机号" bindchange="input_phoneNum"/>
+    </view>
+    <view class="mima">
+        <input class="input2" type="text" placeholder="密码(不少于6位)" bindchange="input_password"/>
+    </view>
+    <view class="forget">
+        <view class="forget1">忘记密码?</view>
+    </view>
+    <view class="btn-yes" bindtap="bangding">立即绑定</view>
+</view>

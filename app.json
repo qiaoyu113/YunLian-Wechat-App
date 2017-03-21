@@ -9,7 +9,8 @@
     "pages/register/register",
     "pages/apply/apply",
     "pages/waitapply/waitapply",
-    "pages/map/map"
+    "pages/map/map",
+    "pages/registered/registered"
   ],
   "window":{
     "backgroundTextStyle":"light",
