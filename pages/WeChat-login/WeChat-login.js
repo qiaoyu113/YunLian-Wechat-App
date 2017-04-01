@@ -9,37 +9,14 @@ Page({
       userInfo: wx.getStorageSync('userInfo')
     })
   },
-  onUnload: function () {
+  regiest: function () {
     wx.navigateTo({
-      url: '../activity-index/activity-index'
+      url: '../register/register?register=true'
     })
   },
-  phone: function () {
+  bind: function () {
     wx.navigateTo({
-      url: '../register/register?register=true',
-      success: function (res) {
-        // success
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
-    })
-  },
-  phone1: function () {
-    wx.navigateTo({
-      url: '../registered/registered?register=true',
-      success: function (res) {
-        // success
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
+      url: '../bind/bind?register=true'
     })
   }
 })
